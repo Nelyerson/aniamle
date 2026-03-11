@@ -9,75 +9,7 @@
 // DATA
 // ============================================================
 
-const ANIMALS = [
-  { id: 1,  emoji: '🦁', name: 'León Africano',       latin: 'Panthera leo',          continent: 'Africa',    risk: 'vulnerable', population: 23000,  lifespan: 14, trend: -3.5, habitat: 'Sabana',    mapMarker: { top: 52, left: 50 } },
-  { id: 2,  emoji: '🐼', name: 'Panda Gigante',        latin: 'Ailuropoda melanoleuca', continent: 'Asia',      risk: 'vulnerable', population: 1864,   lifespan: 20, trend: +2.1, habitat: 'Bambusar', mapMarker: { top: 38, left: 72 } },
-  { id: 3,  emoji: '🐅', name: 'Tigre de Bengala',     latin: 'Panthera tigris tigris', continent: 'Asia',      risk: 'peligro',    population: 2500,   lifespan: 15, trend: +1.8, habitat: 'Selva',     mapMarker: { top: 42, left: 66 } },
-  { id: 4,  emoji: '🦏', name: 'Rinoceronte Negro',    latin: 'Diceros bicornis',       continent: 'Africa',    risk: 'critico',    population: 6195,   lifespan: 35, trend: +3.2, habitat: 'Sabana',    mapMarker: { top: 60, left: 52 } },
-  { id: 5,  emoji: '🐘', name: 'Elefante Asiático',    latin: 'Elephas maximus',        continent: 'Asia',      risk: 'peligro',    population: 48000,  lifespan: 60, trend: -1.4, habitat: 'Bosque',    mapMarker: { top: 45, left: 68 } },
-  { id: 6,  emoji: '🦅', name: 'Águila Arpía',         latin: 'Harpia harpyja',         continent: 'SudAmerica',risk: 'vulnerable', population: 50000,  lifespan: 35, trend: -0.8, habitat: 'Selva',     mapMarker: { top: 60, left: 28 } },
-  { id: 7,  emoji: '🐋', name: 'Ballena Azul',         latin: 'Balaenoptera musculus',  continent: 'Oceania',   risk: 'peligro',    population: 10000,  lifespan: 90, trend: +0.5, habitat: 'Océano',   mapMarker: { top: 65, left: 78 } },
-  { id: 8,  emoji: '🦊', name: 'Zorro Ártico',         latin: 'Vulpes lagopus',         continent: 'Europa',    risk: 'menor',      population: 630000, lifespan: 6,  trend: -5.1, habitat: 'Tundra',    mapMarker: { top: 18, left: 45 } },
-  { id: 9,  emoji: '🐊', name: 'Caimán del Orinoco',   latin: 'Crocodylus intermedius', continent: 'SudAmerica',risk: 'critico',    population: 1500,   lifespan: 75, trend: +1.0, habitat: 'Río',       mapMarker: { top: 55, left: 26 } },
-  { id: 10, emoji: '🦁', name: 'Puma',                 latin: 'Puma concolor',          continent: 'NorteAmerica', risk: 'menor',  population: 80000,  lifespan: 12, trend: -2.2, habitat: 'Montaña',   mapMarker: { top: 38, left: 18 } },
-  { id: 11, emoji: '🐺', name: 'Lobo Gris',            latin: 'Canis lupus',            continent: 'Europa',    risk: 'menor',      population: 300000, lifespan: 13, trend: +1.1, habitat: 'Bosque',    mapMarker: { top: 30, left: 44 } },
-  { id: 12, emoji: '🦓', name: 'Cebra de Grevy',       latin: 'Equus grevyi',           continent: 'Africa',    risk: 'peligro',    population: 2250,   lifespan: 25, trend: -4.0, habitat: 'Sabana',    mapMarker: { top: 48, left: 54 } },
-  { id: 13, emoji: '🦁', name: 'Guepardo',             latin: 'Acinonyx jubatus',       continent: 'Africa',    risk: 'vulnerable', population: 7000,   lifespan: 12, trend: -3.0, habitat: 'Sabana',    mapMarker: { top: 50, left: 54 } },
-  { id: 14, emoji: '🦈', name: 'Tiburón Blanco',       latin: 'Carcharodon carcharias', continent: 'Oceania',   risk: 'vulnerable', population: 3500,   lifespan: 70, trend: -2.5, habitat: 'Océano',   mapMarker: { top: 68, left: 74 } },
-  { id: 15, emoji: '🦜', name: 'Guacamayo Jacinto',    latin: 'Anodorhynchus hyacinthinus', continent: 'SudAmerica', risk: 'vulnerable', population: 6500, lifespan: 50, trend: +0.3, habitat: 'Pantanal', mapMarker: { top: 62, left: 30 } },
-  { id: 16, emoji: '🐆', name: 'Leopardo de Amur',     latin: 'Panthera pardus orientalis', continent: 'Asia',  risk: 'critico',    population: 100,    lifespan: 15, trend: +5.0, habitat: 'Bosque',    mapMarker: { top: 28, left: 78 } },
-];
 
-const RISK_LABELS = { critico: 'Crítico', peligro: 'En Peligro', vulnerable: 'Vulnerable', menor: 'Preocupación Menor' };
-const RISK_COLORS = { critico: '#ef4444', peligro: '#f97316', vulnerable: '#eab308', menor: '#3b82f6' };
-
-const STATS_CARDS = [
-  { icon: '🦁', label: 'Especies Monitoreadas', value: '16', unit: '', progress: 100, badge: '↑ 3 nuevas', badgeClass: 'badge-up', accent: '#10b981', iconBg: 'rgba(16,185,129,0.08)', fill: '#10b981' },
-  { icon: '🔴', label: 'En Estado Crítico',      value: '3',  unit: '',  progress: 19,  badge: '↑ Alerta',  badgeClass: 'badge-down', accent: '#ef4444', iconBg: 'rgba(239,68,68,0.08)',  fill: '#ef4444' },
-  { icon: '👥', label: 'Población Total (M)',     value: '1.1', unit: 'M', progress: 45, badge: '↓ 1.8%',   badgeClass: 'badge-warn', accent: '#f97316', iconBg: 'rgba(249,115,22,0.08)', fill: '#f97316' },
-  { icon: '📅', label: 'Esperanza de Vida Prom.', value: '34', unit: 'años', progress: 68, badge: 'Estable', badgeClass: 'badge-up', accent: '#3b82f6', iconBg: 'rgba(59,130,246,0.08)', fill: '#3b82f6' },
-];
-
-const CONTINENT_DATA = [
-  { name: 'Asia',          count: 5, pct: 88 },
-  { name: 'África',        count: 4, pct: 75 },
-  { name: 'Sudamérica',    count: 3, pct: 60 },
-  { name: 'Europa',        count: 2, pct: 40 },
-  { name: 'Norte América', count: 1, pct: 25 },
-  { name: 'Oceanía',       count: 2, pct: 35 },
-];
-
-const TREND_DATA = [
-  { label: 'Ballena Azul',  value: 72, color: '#3b82f6' },
-  { label: 'Panda Gigante', value: 91, color: '#10b981' },
-  { label: 'L. de Amur',   value: 85, color: '#10b981' },
-  { label: 'Tigre Bengala', value: 63, color: '#f97316' },
-  { label: 'Guepardo',      value: 40, color: '#ef4444' },
-  { label: 'Zorro Ártico',  value: 28, color: '#ef4444' },
-];
-
-const MISSIONS = [
-  { id: 'm1', title: 'Explorador de la Sabana',  desc: 'Observa 5 especies africanas',  xp: 15, icon: '🌾', completed: false },
-  { id: 'm2', title: 'Protector del Ártico',     desc: 'Aprende sobre 3 especies polares', xp: 20, icon: '❄️', completed: false },
-  { id: 'm3', title: 'Guardián del Océano',      desc: 'Descubre 4 especies marinas',   xp: 25, icon: '🌊', completed: false },
-  { id: 'm4', title: 'Rastreador de Felinos',    desc: 'Identifica 4 grandes felinos',  xp: 18, icon: '🐾', completed: false },
-  { id: 'm5', title: 'Defensor de la Selva',     desc: 'Explora animales de Amazonas',  xp: 22, icon: '🌿', completed: false },
-];
-
-const ACHIEVEMENTS = [
-  { id: 'a1', icon: '🥇', name: 'Primer Avistamiento',  desc: 'Completa tu primera misión', unlocked: false },
-  { id: 'a2', icon: '🌿', name: 'Naturalista',           desc: 'Alcanza nivel 3', unlocked: false },
-  { id: 'a3', icon: '🦅', name: 'Maestro de la Fauna',   desc: 'Completa todas las misiones', unlocked: false },
-  { id: 'a4', icon: '🔭', name: 'Gran Explorador',       desc: 'Acumula 100 XP', unlocked: false },
-];
-
-const LEVELS = [
-  { min: 0,   max: 100,  label: 'Observador',     rank: 1 },
-  { min: 100, max: 200,  label: 'Rastreador',     rank: 2 },
-  { min: 200, max: 350,  label: 'Naturalista',    rank: 3 },
-  { min: 350, max: 500,  label: 'Explorador',     rank: 4 },
-  { min: 500, max: 999,  label: 'Guardián Elite', rank: 5 },
-];
 
 // ============================================================
 // STATE
