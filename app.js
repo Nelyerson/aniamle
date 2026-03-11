@@ -9,7 +9,75 @@
 // DATA
 // ============================================================
 
+const ANIMALS = [
+  { id: 1,  emoji: '🦁', name: 'León Africano',       latin: 'Panthera leo',          continent: 'Africa',    risk: 'vulnerable', population: 23000,  lifespan: 14, trend: -3.5, habitat: 'Sabana',    mapMarker: { top: 52, left: 50 } },
+  { id: 2,  emoji: '🐼', name: 'Panda Gigante',        latin: 'Ailuropoda melanoleuca', continent: 'Asia',      risk: 'vulnerable', population: 1864,   lifespan: 20, trend: +2.1, habitat: 'Bambusar', mapMarker: { top: 38, left: 72 } },
+  { id: 3,  emoji: '🐅', name: 'Tigre de Bengala',     latin: 'Panthera tigris tigris', continent: 'Asia',      risk: 'peligro',    population: 2500,   lifespan: 15, trend: +1.8, habitat: 'Selva',     mapMarker: { top: 42, left: 66 } },
+  { id: 4,  emoji: '🦏', name: 'Rinoceronte Negro',    latin: 'Diceros bicornis',       continent: 'Africa',    risk: 'critico',    population: 6195,   lifespan: 35, trend: +3.2, habitat: 'Sabana',    mapMarker: { top: 60, left: 52 } },
+  { id: 5,  emoji: '🐘', name: 'Elefante Asiático',    latin: 'Elephas maximus',        continent: 'Asia',      risk: 'peligro',    population: 48000,  lifespan: 60, trend: -1.4, habitat: 'Bosque',    mapMarker: { top: 45, left: 68 } },
+  { id: 6,  emoji: '🦅', name: 'Águila Arpía',         latin: 'Harpia harpyja',         continent: 'SudAmerica',risk: 'vulnerable', population: 50000,  lifespan: 35, trend: -0.8, habitat: 'Selva',     mapMarker: { top: 60, left: 28 } },
+  { id: 7,  emoji: '🐋', name: 'Ballena Azul',         latin: 'Balaenoptera musculus',  continent: 'Oceania',   risk: 'peligro',    population: 10000,  lifespan: 90, trend: +0.5, habitat: 'Océano',   mapMarker: { top: 65, left: 78 } },
+  { id: 8,  emoji: '🦊', name: 'Zorro Ártico',         latin: 'Vulpes lagopus',         continent: 'Europa',    risk: 'menor',      population: 630000, lifespan: 6,  trend: -5.1, habitat: 'Tundra',    mapMarker: { top: 18, left: 45 } },
+  { id: 9,  emoji: '🐊', name: 'Caimán del Orinoco',   latin: 'Crocodylus intermedius', continent: 'SudAmerica',risk: 'critico',    population: 1500,   lifespan: 75, trend: +1.0, habitat: 'Río',       mapMarker: { top: 55, left: 26 } },
+  { id: 10, emoji: '🦁', name: 'Puma',                 latin: 'Puma concolor',          continent: 'NorteAmerica', risk: 'menor',  population: 80000,  lifespan: 12, trend: -2.2, habitat: 'Montaña',   mapMarker: { top: 38, left: 18 } },
+  { id: 11, emoji: '🐺', name: 'Lobo Gris',            latin: 'Canis lupus',            continent: 'Europa',    risk: 'menor',      population: 300000, lifespan: 13, trend: +1.1, habitat: 'Bosque',    mapMarker: { top: 30, left: 44 } },
+  { id: 12, emoji: '🦓', name: 'Cebra de Grevy',       latin: 'Equus grevyi',           continent: 'Africa',    risk: 'peligro',    population: 2250,   lifespan: 25, trend: -4.0, habitat: 'Sabana',    mapMarker: { top: 48, left: 54 } },
+  { id: 13, emoji: '🦁', name: 'Guepardo',             latin: 'Acinonyx jubatus',       continent: 'Africa',    risk: 'vulnerable', population: 7000,   lifespan: 12, trend: -3.0, habitat: 'Sabana',    mapMarker: { top: 50, left: 54 } },
+  { id: 14, emoji: '🦈', name: 'Tiburón Blanco',       latin: 'Carcharodon carcharias', continent: 'Oceania',   risk: 'vulnerable', population: 3500,   lifespan: 70, trend: -2.5, habitat: 'Océano',   mapMarker: { top: 68, left: 74 } },
+  { id: 15, emoji: '🦜', name: 'Guacamayo Jacinto',    latin: 'Anodorhynchus hyacinthinus', continent: 'SudAmerica', risk: 'vulnerable', population: 6500, lifespan: 50, trend: +0.3, habitat: 'Pantanal', mapMarker: { top: 62, left: 30 } },
+  { id: 16, emoji: '🐆', name: 'Leopardo de Amur',     latin: 'Panthera pardus orientalis', continent: 'Asia',  risk: 'critico',    population: 100,    lifespan: 15, trend: +5.0, habitat: 'Bosque',    mapMarker: { top: 28, left: 78 } },
+];
 
+const RISK_LABELS = { critico: 'Crítico', peligro: 'En Peligro', vulnerable: 'Vulnerable', menor: 'Preocupación Menor' };
+const RISK_COLORS = { critico: '#ef4444', peligro: '#f97316', vulnerable: '#eab308', menor: '#3b82f6' };
+
+const STATS_CARDS = [
+  { icon: '🦁', label: 'Especies Monitoreadas', value: '16', unit: '', progress: 100, badge: '↑ 3 nuevas', badgeClass: 'badge-up', accent: '#10b981', iconBg: 'rgba(16,185,129,0.08)', fill: '#10b981' },
+  { icon: '🔴', label: 'En Estado Crítico',      value: '3',  unit: '',  progress: 19,  badge: '↑ Alerta',  badgeClass: 'badge-down', accent: '#ef4444', iconBg: 'rgba(239,68,68,0.08)',  fill: '#ef4444' },
+  { icon: '👥', label: 'Población Total (M)',     value: '1.1', unit: 'M', progress: 45, badge: '↓ 1.8%',   badgeClass: 'badge-warn', accent: '#f97316', iconBg: 'rgba(249,115,22,0.08)', fill: '#f97316' },
+  { icon: '📅', label: 'Esperanza de Vida Prom.', value: '34', unit: 'años', progress: 68, badge: 'Estable', badgeClass: 'badge-up', accent: '#3b82f6', iconBg: 'rgba(59,130,246,0.08)', fill: '#3b82f6' },
+];
+
+const CONTINENT_DATA = [
+  { name: 'Asia',          count: 5, pct: 88 },
+  { name: 'África',        count: 4, pct: 75 },
+  { name: 'Sudamérica',    count: 3, pct: 60 },
+  { name: 'Europa',        count: 2, pct: 40 },
+  { name: 'Norte América', count: 1, pct: 25 },
+  { name: 'Oceanía',       count: 2, pct: 35 },
+];
+
+const TREND_DATA = [
+  { label: 'Ballena Azul',  value: 72, color: '#3b82f6' },
+  { label: 'Panda Gigante', value: 91, color: '#10b981' },
+  { label: 'L. de Amur',   value: 85, color: '#10b981' },
+  { label: 'Tigre Bengala', value: 63, color: '#f97316' },
+  { label: 'Guepardo',      value: 40, color: '#ef4444' },
+  { label: 'Zorro Ártico',  value: 28, color: '#ef4444' },
+];
+
+const MISSIONS = [
+  { id: 'm1', title: 'Explorador de la Sabana',  desc: 'Observa 5 especies africanas',  xp: 15, icon: '🌾', completed: false },
+  { id: 'm2', title: 'Protector del Ártico',     desc: 'Aprende sobre 3 especies polares', xp: 20, icon: '❄️', completed: false },
+  { id: 'm3', title: 'Guardián del Océano',      desc: 'Descubre 4 especies marinas',   xp: 25, icon: '🌊', completed: false },
+  { id: 'm4', title: 'Rastreador de Felinos',    desc: 'Identifica 4 grandes felinos',  xp: 18, icon: '🐾', completed: false },
+  { id: 'm5', title: 'Defensor de la Selva',     desc: 'Explora animales de Amazonas',  xp: 22, icon: '🌿', completed: false },
+];
+
+const ACHIEVEMENTS = [
+  { id: 'a1', icon: '🥇', name: 'Primer Avistamiento',  desc: 'Completa tu primera misión', unlocked: false },
+  { id: 'a2', icon: '🌿', name: 'Naturalista',           desc: 'Alcanza nivel 3', unlocked: false },
+  { id: 'a3', icon: '🦅', name: 'Maestro de la Fauna',   desc: 'Completa todas las misiones', unlocked: false },
+  { id: 'a4', icon: '🔭', name: 'Gran Explorador',       desc: 'Acumula 100 XP', unlocked: false },
+];
+
+const LEVELS = [
+  { min: 0,   max: 100,  label: 'Observador',     rank: 1 },
+  { min: 100, max: 200,  label: 'Rastreador',     rank: 2 },
+  { min: 200, max: 350,  label: 'Naturalista',    rank: 3 },
+  { min: 350, max: 500,  label: 'Explorador',     rank: 4 },
+  { min: 500, max: 999,  label: 'Guardián Elite', rank: 5 },
+];
 
 // ============================================================
 // STATE
@@ -533,239 +601,6 @@ const CHAT_EMOJIS = [
   '👍','❤️','🙌','💪','🎉','🏆','📊','🔬','🌱','🦋',
 ];
 
-// ==================== 1. INTENT DETECTION ====================
-// These run FIRST — before any RAG or keyword matching.
-// Each intent has a test() and a reply() function.
-
-const INTENTS = [
-  // Greeting
-  {
-    test: q => /^(hola|hi|hey|saludos|buenas|buenos días|buen día|good morning|ola)[\s!¡.]*$/i.test(q.trim()),
-    reply: () => '¡Hola! 🌿 Soy **WildBot**, tu guía de fauna silvestre con IA. Puedo responderte sobre:\n\n• 🦁 **Todos los animales** monitoreados\n• 🔴 Especies en peligro o extinción\n• 🌍 Fauna por continente\n• 🎯 Misiones, XP y logros\n• 📊 Estadísticas de biodiversidad\n\n¿Qué quieres saber?'
-  },
-
-  // List ALL animals
-  {
-    test: q => /(todos|todas|lista|listar|dame|muéstrame|mostrar|cuales|cuáles).*(animales?|especies?|fauna)/i.test(q) ||
-               /(animales?|especies?|fauna).*(todos|todas|lista|todas las|todos los)/i.test(q) ||
-               /^(animales?|especies?|fauna)\s*[?!]*$/i.test(q.trim()),
-    reply: () => {
-      const list = ANIMALS.map(a =>
-        `• ${a.emoji} **${a.name}** — *${a.latin}* | ${RISK_LABELS[a.risk]} | ${a.continent}`
-      ).join('\n');
-      return `🌍 **Las ${ANIMALS.length} especies monitoreadas en WildTrack:**\n\n${list}\n\n¿Quieres saber más sobre alguna en particular?`;
-    }
-  },
-
-  // Animals by RISK — crítico
-  {
-    test: q => /(critico|crítico|críticas?|peligro crítico|extinción|extincion|extintas?)/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.risk === 'critico');
-      return `🔴 **Especies en Peligro Crítico (${list.length}):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** *(${a.latin})*\n  👥 Población: ~${formatNumber(a.population)} · 📅 Esperanza de vida: ${a.lifespan} años · 🌿 Hábitat: ${a.habitat}`).join('\n\n')
-      }\n\n¡Estas especies necesitan acción urgente de conservación!`;
-    }
-  },
-
-  // Animals by RISK — en peligro
-  {
-    test: q => /\b(en peligro|peligro[^s])\b/i.test(q) && !/crítico/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.risk === 'peligro');
-      return `🟠 **Especies En Peligro (${list.length}):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** *(${a.latin})*\n  👥 ~${formatNumber(a.population)} individuos · 🌿 ${a.habitat}`).join('\n\n')
-      }`;
-    }
-  },
-
-  // Animals by RISK — vulnerable
-  {
-    test: q => /\b(vulnerable|vulnerables)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.risk === 'vulnerable');
-      return `🟡 **Especies Vulnerables (${list.length}):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** *(${a.latin})*\n  👥 ~${formatNumber(a.population)} individuos · 🌿 ${a.habitat}`).join('\n\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — Africa
-  {
-    test: q => /\b(africa|africano|african|sabana)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'Africa');
-      return `🌍 **Fauna de África (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — Asia
-  {
-    test: q => /\b(asia|asiático|asiática|asiatico|asiatica)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'Asia');
-      return `🌏 **Fauna de Asia (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — SudAmerica
-  {
-    test: q => /\b(sudamerica|sudamérica|sur america|sur améric|america del sur|amazonas|amazon)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'SudAmerica');
-      return `🌎 **Fauna de Sudamérica (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — NorteAmerica
-  {
-    test: q => /\b(norteamerica|norteamérica|norte america|america del norte)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'NorteAmerica');
-      return `🌎 **Fauna de Norte América (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — Europa
-  {
-    test: q => /\b(europa|europe|europeo|europeos)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'Europa');
-      return `🏔️ **Fauna de Europa (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Animals by CONTINENT — Oceania
-  {
-    test: q => /\b(oceania|oceanía|australia|australia|pacifico|pacífico)\b/i.test(q),
-    reply: () => {
-      const list = ANIMALS.filter(a => a.continent === 'Oceania');
-      return `🦘 **Fauna de Oceanía (${list.length} especies):**\n\n${
-        list.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | 👥 ~${formatNumber(a.population)}`).join('\n')
-      }`;
-    }
-  },
-
-  // Specific animal lookup — any animal name from the array
-  {
-    test: q => ANIMALS.some(a =>
-      q.toLowerCase().includes(a.name.toLowerCase().split(' ')[0]) ||
-      q.toLowerCase().includes(a.name.toLowerCase())
-    ),
-    reply: q => {
-      const found = ANIMALS.find(a =>
-        q.toLowerCase().includes(a.name.toLowerCase().split(' ')[0]) ||
-        q.toLowerCase().includes(a.name.toLowerCase())
-      );
-      if (!found) return null;
-      const trendIcon = found.trend >= 0 ? '↑' : '↓';
-      const trendColor = found.trend >= 0 ? '📈' : '📉';
-      return `${found.emoji} **${found.name}** *(${found.latin})*\n\n` +
-        `• 🔴 Estado: **${RISK_LABELS[found.risk]}**\n` +
-        `• 👥 Población estimada: ~**${formatNumber(found.population)}** individuos\n` +
-        `• 📅 Esperanza de vida: **${found.lifespan} años**\n` +
-        `• 🌍 Continente: **${found.continent}**\n` +
-        `• 🌿 Hábitat: **${found.habitat}**\n` +
-        `• ${trendColor} Tendencia poblacional: **${trendIcon} ${found.trend}%**`;
-    }
-  },
-
-  // Missions list
-  {
-    test: q => /mis(?:iones?|ion)/i.test(q) || /\b(logros?|xp|expedicion|expedición|nivel)\b/i.test(q),
-    reply: () => {
-      const completadas = MISSIONS.filter(m => m.completed).length;
-      const lista = MISSIONS.map(m =>
-        `• ${m.completed ? '✅' : '⬜'} ${m.icon} **${m.title}** — +${m.xp} XP\n  _${m.desc}_`
-      ).join('\n');
-      return `🎯 **Misiones de WildTrack (${completadas}/${MISSIONS.length} completadas):**\n\n${lista}\n\n**XP actual:** ${userXP} pts · Haz clic en cualquier misión de la barra lateral para completarla y ganar XP.`;
-    }
-  },
-
-  // Global stats
-  {
-    test: q => /\b(estadisticas?|estadísticas?|datos|resumen|cuantas?|cuántas?|total|numeros?|números?|cifras?)\b/i.test(q),
-    reply: () => {
-      const total = ANIMALS.length;
-      const byCont = {};
-      ANIMALS.forEach(a => { byCont[a.continent] = (byCont[a.continent] || 0) + 1; });
-      const continentes = Object.entries(byCont).map(([k, v]) => `  • ${k}: ${v}`).join('\n');
-      return `📊 **Estadísticas globales de WildTrack:**\n\n` +
-        `• 🌍 Total de especies monitoreadas: **${total}**\n` +
-        `• 🔴 En Peligro Crítico: **${ANIMALS.filter(a => a.risk === 'critico').length}**\n` +
-        `• 🟠 En Peligro: **${ANIMALS.filter(a => a.risk === 'peligro').length}**\n` +
-        `• 🟡 Vulnerables: **${ANIMALS.filter(a => a.risk === 'vulnerable').length}**\n` +
-        `• 🔵 Preocupación Menor: **${ANIMALS.filter(a => a.risk === 'menor').length}**\n\n` +
-        `**Por continente:**\n${continentes}\n\n` +
-        `• 📅 Esperanza de vida promedio: **${Math.round(ANIMALS.reduce((s, a) => s + a.lifespan, 0) / total)} años**`;
-    }
-  },
-
-  // Population / most endangered
-  {
-    test: q => /\b(mas?|más).*(peligro|amenazado|raro|escaso)\b/i.test(q) ||
-               /\b(menor|más pequeña|mínima).*(poblaci)/i.test(q) ||
-               /\b(animal|especie).*(menos|escas|raro)\b/i.test(q),
-    reply: () => {
-      const sorted = [...ANIMALS].sort((a, b) => a.population - b.population);
-      const top5 = sorted.slice(0, 5);
-      return `⚠️ **Las 5 especies con menor población:**\n\n${
-        top5.map((a, i) => `${i + 1}. ${a.emoji} **${a.name}** — ~${formatNumber(a.population)} individuos | **${RISK_LABELS[a.risk]}**`).join('\n')
-      }\n\n_Datos basados en estimaciones actuales de la UICN._`;
-    }
-  },
-
-  // Conservation help
-  {
-    test: q => /\b(como|cómo).*(ayud|conserv|proteg|salvar?)\b/i.test(q) || /\b(ayud|conserv|proteg).*(como|cómo)\b/i.test(q),
-    reply: () => '🌿 **Cómo puedes ayudar a conservar la fauna silvestre:**\n\n' +
-      '1. ✅ **Completa las misiones** en el panel lateral — cada misión apoya una causa real\n' +
-      '2. 💚 **Apoya organizaciones** como WWF, UICN, WCS o National Geographic Society\n' +
-      '3. 🚫 **Evita productos ilegales** de origen animal (marfil, pieles, etc.)\n' +
-      '4. 📢 **Difunde información** sobre biodiversidad en tu comunidad\n' +
-      '5. 🌳 **Planta árboles nativos** y participa en actividades de reforestación\n' +
-      '6. 🔍 **Explora el mapa** de avistamientos para conocer las zonas críticas de biodiversidad'
-  },
-
-  // Achievements
-  {
-    test: q => /\b(logros?|achievements?|desbloquear|desbloqueado)\b/i.test(q),
-    reply: () => {
-      const lista = ACHIEVEMENTS.map(a =>
-        `• ${a.unlocked ? '🏆' : '🔒'} **${a.name}** — _${a.desc}_`
-      ).join('\n');
-      return `🏆 **Logros de WildTrack:**\n\n${lista}\n\nCompleta misiones para desbloquear logros y subir de nivel.`;
-    }
-  },
-
-  // Map / sightings
-  {
-    test: q => /\b(mapa|map|avistamiento|marcador|radar|ubicaci|donde|dónde)\b/i.test(q),
-    reply: () => `🗺️ **Mapa de Avistamientos de WildTrack:**\n\n` +
-      `El mapa muestra **${ANIMALS.length} marcadores** interactivos distribuidos globalmente:\n\n` +
-      `• 🔴 **Crítico**: ${ANIMALS.filter(a => a.risk === 'critico').length} marcadores (rojo)\n` +
-      `• 🟠 **En Peligro**: ${ANIMALS.filter(a => a.risk === 'peligro').length} marcadores (naranja)\n` +
-      `• 🟡 **Vulnerable**: ${ANIMALS.filter(a => a.risk === 'vulnerable').length} marcadores (amarillo)\n` +
-      `• 🔵 **Menor riesgo**: ${ANIMALS.filter(a => a.risk === 'menor').length} marcadores (azul)\n\n` +
-      `Haz clic en cualquier marcador para ver la ficha detallada del animal. Usa los filtros para mostrar solo una categoría de riesgo.`
-  },
-
-  // Thanks / positive feedback
-  {
-    test: q => /^(gracias|thanks|thx|perfecto|genial|excelente|ok|bien|buenisimo|buenísimo|increible|increíble|cool|nice)[\s!.]*$/i.test(q.trim()),
-    reply: () => '😊 ¡Con mucho gusto! Sigue explorando WildTrack — hay **16 especies** que descubrir, **5 misiones** que completar y un **mapa interactivo** con datos en tiempo real. ¿Qué más quieres saber?'
-  },
-];
 
 // ==================== 2. RAG ENGINE ====================
 // Spanish stopwords (filtered out of TF-IDF)
@@ -822,87 +657,8 @@ function ragCosineSim(a, b) {
   return na && nb ? dot / Math.sqrt(na * nb) : 0;
 }
 
-// Build the knowledge base dynamically from:
-// 1. ANIMALS data — one doc per animal
-// 2. Summaries by continent and risk level
-// 3. rag-data.json entries
-function buildRagKnowledge() {
-  const docs = [];
-
-  // --- Per-animal documents ---
-  ANIMALS.forEach(a => {
-    const trendDir = a.trend >= 0 ? 'en aumento' : 'en descenso';
-    docs.push({
-      text: `${a.name} ${a.latin} ${a.continent} ${a.habitat} ${RISK_LABELS[a.risk]}`,
-      response:
-        `${a.emoji} **${a.name}** *(${a.latin})*\n\n` +
-        `• Estado de conservación: **${RISK_LABELS[a.risk]}**\n` +
-        `• Población estimada: ~**${formatNumber(a.population)}** individuos\n` +
-        `• Esperanza de vida: **${a.lifespan} años**\n` +
-        `• Hábitat natural: **${a.habitat}**\n` +
-        `• Continente: **${a.continent}**\n` +
-        `• Tendencia poblacional: **${trendDir} (${a.trend > 0 ? '+' : ''}${a.trend}%)**`,
-    });
-  });
-
-  // --- Summary documents ---
-  const riskGroups = ['critico', 'peligro', 'vulnerable', 'menor'];
-  riskGroups.forEach(r => {
-    const group = ANIMALS.filter(a => a.risk === r);
-    docs.push({
-      text: `animales ${r} peligro estado riesgo extincion ${RISK_LABELS[r]} especies`,
-      response: `${r === 'critico' ? '🔴' : r === 'peligro' ? '🟠' : r === 'vulnerable' ? '🟡' : '🔵'} **${RISK_LABELS[r]} (${group.length} especies):**\n\n` +
-        group.map(a => `• ${a.emoji} **${a.name}** — ~${formatNumber(a.population)} individuos`).join('\n'),
-    });
-  });
-
-  // Continent summaries
-  const continents = [...new Set(ANIMALS.map(a => a.continent))];
-  continents.forEach(cont => {
-    const group = ANIMALS.filter(a => a.continent === cont);
-    docs.push({
-      text: `fauna animales especies ${cont.toLowerCase()} continente`,
-      response: `🌍 **Fauna de ${cont} (${group.length} especies):**\n\n` +
-        group.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]}`).join('\n'),
-    });
-  });
-
-  // All animals summary
-  docs.push({
-    text: 'todos animales especies lista fauna silvestre wildtrack completa',
-    response: `🌍 **Las ${ANIMALS.length} especies monitoreadas:**\n\n` +
-      ANIMALS.map(a => `• ${a.emoji} **${a.name}** — ${RISK_LABELS[a.risk]} | ${a.continent}`).join('\n'),
-  });
-
-  // Missions summary
-  docs.push({
-    text: 'misiones xp expedicion conservacion logros nivel guardián explorador',
-    response: `🎯 **Misiones de WildTrack:**\n\n` +
-      MISSIONS.map(m => `• ${m.icon} **${m.title}** — ${m.desc} *(+${m.xp} XP)*`).join('\n') +
-      `\n\n**Logros:** Completa misiones para desbloquear: ${ACHIEVEMENTS.map(a => a.icon + ' ' + a.name).join(', ')}`,
-  });
-
-  // Page / tech info from rag-data.json (inline copy of key entries)
-  const ragStaticDocs = [
-    { text: 'wildtrack spa pagina app tecnologias html css javascript', response: 'WildTrack está construido con **HTML5, CSS3 y Vanilla JS (ES6+)**. Es una Single Page Application (SPA) con navegación fluida, diseño glassmorphism en dark mode, animaciones CSS, IntersectionObserver para carga progresiva, y datos completamente en JavaScript sin servidor.' },
-    { text: 'hero seccion bienvenida titulo fondo orbes animaciones cta boton', response: 'La **sección Hero** muestra el título "Fauna Silvestre en Peligro" con gradiente esmeralda-naranja, orbes animados de fondo, mini-estadísticas (8.7M especies, 41K en peligro, 195 países), tarjetas flotantes de animales y botones CTA para ir al Dashboard o iniciar misiones.' },
-    { text: 'mapa radar avistamientos marcadores filtros biodiversidad biomas', response: 'El **Mapa de Avistamientos** simula un radar interactivo. Tiene marcadores circulares pulsantes para las 16 especies, coloreados por nivel de riesgo. Al hacer clic, muestra la ficha completa del animal. Hay filtros por: Todos, Crítico, En Peligro y Vulnerable.' },
-    { text: 'dashboard estadisticas graficos donut barras progreso charts', response: 'El **Dashboard de Estadísticas** muestra 4 tarjetas animadas (Especies, Críticas, Población, Esperanza de vida), un gráfico donut SVG de distribución por riesgo, barras de tendencia poblacional, y estadísticas de cobertura por continente.' },
-    { text: 'fichas tecnicas filtros busqueda continente especie grid cards', response: 'Las **Fichas Técnicas** muestran cards de las 16 especies con búsqueda en tiempo real, filtros por continente (África, Asia, Sudamérica, Europa, N.América, Oceanía) y por nivel de riesgo. El filtrado es instantáneo sin recargar la página.' },
-    { text: 'misiones gamificacion xp nivel logros sidebar accordion guardián', response: 'El sistema de **Gamificación** incluye: 5 misiones de conservación con XP, barra de nivel (Observador → Rastreador → Naturalista → Explorador → Guardián Elite), 4 logros desbloqueables, y el contador de XP en la navbar.' },
-    { text: 'intersectionobserver animaciones barras scroll carga progressive lazy', response: 'WildTrack usa **IntersectionObserver** para activar animaciones de barras de progreso solo cuando el elemento entra en pantalla. Las barras de Población, Riesgo y Longevidad arrancan en 0% y se animan hasta su valor real con transition CSS de 1.5s.' },
-    { text: 'navbar navegacion sticky links smooth scroll backdrop blur glassmorphism', response: 'La **Navbar** es sticky (position: fixed) con efecto blur glassmorphism. Al hacer scroll muestra sombra adicional. Los links activan smooth scroll a cada sección y el link activo se resalta automáticamente según la sección visible.' },
-  ];
-
-  ragStaticDocs.forEach(d => docs.push(d));
-  return docs;
-}
-
 async function initRAG() {
-  // Build dynamic knowledge base from live data
-  const dynamicDocs = buildRagKnowledge();
-
-  let extraDocs = [];
+  let allDocs = [];
   
   // Try to load conocimiento.txt (RAG Document required by user)
   try {
@@ -911,24 +667,10 @@ async function initRAG() {
         const text = await res.text();
         const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 10);
         const txtDocs = paragraphs.map(p => ({ text: p, response: p }));
-        extraDocs = [...extraDocs, ...txtDocs];
+        allDocs = txtDocs;
         console.log(`[WildBot RAG] ✅ Loaded ${txtDocs.length} docs from conocimiento.txt`);
     }
   } catch(e) { console.warn("No conocimiento.txt found"); }
-
-  // Try to also load rag-data.json (adds more entries when served over HTTP)
-  try {
-    const res = await fetch('rag-data.json');
-    if (res.ok) {
-      const raw = await res.json();
-      extraDocs = [...extraDocs, ...raw.map(d => ({ text: d.text, response: d.response }))];
-      console.log(`[WildBot RAG] ✅ Loaded ${raw.length} extra docs from rag-data.json`);
-    }
-  } catch (_) {
-    console.log('[WildBot RAG] 📦 Using inline knowledge base only');
-  }
-
-  const allDocs = [...dynamicDocs, ...extraDocs];
 
   // Vectorize
   const rawDocs = allDocs.map(d => ({
@@ -1064,8 +806,8 @@ window.sendChatMessage = function() {
 
     // Priority 3: generic fallback
     const fallbacks = [
-      '🌿 No encontré una respuesta exacta. Puedes preguntarme:\n• **"Todos los animales"** — lista completa\n• **"Animales críticos"** — en peligro de extinción\n• **"Fauna de África"** — por continente\n• **"Misiones"** — tus objetivos de conservación\n• El nombre de un animal específico (ej. *"tigre"*, *"panda"*)',
-      '🔍 Intenta ser más específico. Ejemplos:\n• *"¿Cuáles animales están en peligro crítico?"*\n• *"Dime sobre el leopardo de Amur"*\n• *"¿Qué misiones hay disponibles?"*\n• *"Estadísticas de WildTrack"*',
+      '🌿 No encontré una respuesta exacta en mis documentos. Intenta preguntarlo de otra manera.',
+      '🔍 Intenta ser más específico con tu pregunta para que pueda buscarlo en mi base de conocimientos.',
     ];
     appendChatMsg('bot', fallbacks[Math.floor(Math.random() * fallbacks.length)]);
     msgs.scrollTop = msgs.scrollHeight;
