@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WildTrack — Portal de Fauna Silvestre</title>
+  <meta name="description" content="Explora y protege la fauna silvestre del mundo. Datos de población, avistamientos y misiones de conservación en tiempo real." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="nav-icon">🌿</span>
+      <span class="nav-title">WildTrack</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+      <li><a href="#map" class="nav-link">Mapa</a></li>
+      <li><a href="#species" class="nav-link">Especies</a></li>
+      <li><a href="#missions" class="nav-link">Misiones</a></li>
+    </ul>
+    <div class="nav-badge">
+      <span class="xp-label">XP</span>
+      <span class="xp-nav" id="xpNav">0</span>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero" id="home">
+    <div class="hero-bg-effects">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">🌍 Conservación Global</div>
+      <h1 class="hero-title">Fauna Silvestre<br/><span class="hero-accent">en Peligro</span></h1>
+      <p class="hero-subtitle">Monitorea, explora y protege las especies más vulnerables del planeta. Cada acción cuenta en la lucha por la biodiversidad.</p>
+      <div class="hero-cta">
+        <a href="#dashboard" class="btn btn-primary">Ver Dashboard</a>
+        <a href="#missions" class="btn btn-ghost">Comenzar Misión</a>
+      </div>
+      <div class="hero-stats-mini">
+        <div class="mini-stat"><span class="mini-num">8.7M</span><span class="mini-label">Especies</span></div>
+        <div class="mini-divider"></div>
+        <div class="mini-stat"><span class="mini-num">41K+</span><span class="mini-label">En Peligro</span></div>
+        <div class="mini-divider"></div>
+        <div class="mini-stat"><span class="mini-num">195</span><span class="mini-label">Países</span></div>
+      </div>
+    </div>
+    <div class="hero-animal-cards">
+      <div class="floating-card fc-1">🦁<span>León Africano</span></div>
+      <div class="floating-card fc-2">🐼<span>Panda Gigante</span></div>
+      <div class="floating-card fc-3">🦅<span>Águila Arpía</span></div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+
+    <!-- ===== DASHBOARD DE ESTADÍSTICAS ===== -->
+    <section class="section" id="dashboard">
+      <div class="section-header">
+        <h2 class="section-title">Dashboard de Estadísticas</h2>
+        <p class="section-sub">Datos en tiempo real sobre la fauna global</p>
+      </div>
+
+      <div class="stats-grid" id="statsGrid">
+        <!-- Cards generadas por JS -->
+      </div>
+
+      <div class="charts-row">
+        <div class="glass-card chart-card">
+          <h3 class="card-title">🎯 Distribución por Riesgo</h3>
+          <div class="donut-wrapper">
+            <svg class="donut-chart" viewBox="0 0 200 200" id="donutChart">
+              <!-- Generado por JS -->
+            </svg>
+            <div class="donut-legend" id="donutLegend"></div>
+          </div>
+        </div>
+        <div class="glass-card chart-card">
+          <h3 class="card-title">📊 Tendencia Poblacional</h3>
+          <div class="bar-chart-container" id="barChart">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+        <div class="glass-card chart-card">
+          <h3 class="card-title">🌐 Cobertura por Continente</h3>
+          <div class="continent-stats" id="continentStats">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MAPA DE AVISTAMIENTOS ===== -->
+    <section class="section" id="map">
+      <div class="section-header">
+        <h2 class="section-title">Mapa de Avistamientos</h2>
+        <p class="section-sub">Zonas de alta biodiversidad alrededor del mundo</p>
+      </div>
+      <div class="map-container glass-card">
+        <div class="map-controls">
+          <button class="map-btn active" id="mapAll" onclick="filterMap('all')">🌍 Todos</button>
+          <button class="map-btn" id="mapCritico" onclick="filterMap('critico')">🔴 Crítico</button>
+          <button class="map-btn" id="mapPeligro" onclick="filterMap('peligro')">🟠 Peligro</button>
+          <button class="map-btn" id="mapVulnerable" onclick="filterMap('vulnerable')">🟡 Vulnerable</button>
+        </div>
+        <div class="map-world" id="mapWorld">
+          <div class="map-bg-grid"></div>
+          <div class="map-continents">
+            <span class="continent-label" style="top:35%;left:48%">EUROPA</span>
+            <span class="continent-label" style="top:50%;left:48%">ÁFRICA</span>
+            <span class="continent-label" style="top:30%;left:20%">N. AMERICA</span>
+            <span class="continent-label" style="top:62%;left:28%">S. AMERICA</span>
+            <span class="continent-label" style="top:32%;left:68%">ASIA</span>
+            <span class="continent-label" style="top:62%;left:75%">OCEANÍA</span>
+          </div>
+          <div id="mapMarkers">
+            <!-- Marcadores generados por JS -->
+          </div>
+          <div class="map-legend">
+            <span class="legend-dot critico"></span>Crítico
+            <span class="legend-dot peligro"></span>En Peligro
+            <span class="legend-dot vulnerable"></span>Vulnerable
+          </div>
+        </div>
+        <div class="map-tooltip" id="mapTooltip"></div>
+        <div class="map-info-panel" id="mapInfoPanel">
+          <p>👆 Haz clic en un marcador para ver detalles</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FICHAS TÉCNICAS ===== -->
+    <section class="section" id="species">
+      <div class="section-header">
+        <h2 class="section-title">Fichas Técnicas</h2>
+        <p class="section-sub">Filtra y explora las especies por continente o categoría</p>
+      </div>
+
+      <div class="filter-bar glass-card">
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar especie..." oninput="filterAnimals()" />
+        </div>
+        <div class="filter-tags" id="continentFilters">
+          <!-- Generado por JS -->
+        </div>
+        <div class="filter-tags" id="riskFilters">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <div class="species-count" id="speciesCount"></div>
+
+      <div class="species-grid" id="speciesGrid">
+        <!-- Cards generadas por JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== SIDEBAR DE MISIONES ===== -->
+  <aside class="missions-sidebar" id="missions">
+    <div class="sidebar-inner">
+      <div class="user-profile">
+        <div class="avatar-circle">🦁</div>
+        <div class="user-info">
+          <h3 class="user-name" id="userName">Explorador</h3>
+          <p class="user-rank" id="userRank">Nivel 1 — Observador</p>
+        </div>
+      </div>
+      <div class="xp-bar-wrapper">
+        <div class="xp-bar-labels">
+          <span>XP: <span id="xpDisplay">0</span></span>
+          <span id="xpNext">/ 100</span>
+        </div>
+        <div class="xp-bar-track">
+          <div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="missions-section">
+        <h4 class="missions-title">🎯 Misiones Activas</h4>
+        <div class="missions-list" id="missionsList">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <div class="achievements-section">
+        <h4 class="missions-title">🏆 Logros</h4>
+        <div class="achievements-list" id="achievementsList">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="nav-icon">🌿</span>
+        <span>WildTrack</span>
+      </div>
+      <p class="footer-text">Datos tomados de la Lista Roja de la UICN. Proyecto educativo de conservación.</p>
+      <p class="footer-copy">© 2026 WildTrack — Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- ===== CHATBOT FLOTANTE ===== -->
+
+  <!-- Botón flotante -->
+  <button class="chat-fab" id="chatFab" onclick="toggleChat()" title="Asistente WildTrack">
+    <span class="chat-fab-icon" id="chatFabIcon">🌿</span>
+    <span class="chat-fab-badge" id="chatFabBadge">1</span>
+  </button>
+
+  <!-- Panel de chat -->
+  <div class="chat-panel" id="chatPanel">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-bot-avatar">🌿</div>
+        <div>
+          <div class="chat-bot-name">WildBot</div>
+          <div class="chat-bot-status"><span class="status-dot"></span>En línea</div>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-hbtn" onclick="clearChat()" title="Limpiar chat">🗑️</button>
+        <button class="chat-hbtn" onclick="toggleChat()" title="Cerrar">✕</button>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <!-- Generado por JS -->
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="chat-typing" id="chatTyping" style="display:none">
+      <div class="chat-bot-avatar-sm">🌿</div>
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Quick replies -->
+    <div class="chat-quick-replies" id="chatQuickReplies">
+      <button class="quick-reply" onclick="sendQuickReply('¿Qué animales están en peligro crítico?')">🔴 Peligro crítico</button>
+      <button class="quick-reply" onclick="sendQuickReply('¿Cuántas especies monitoreadas hay?')">📊 Estadísticas</button>
+      <button class="quick-reply" onclick="sendQuickReply('¿Qué misiones puedo hacer?')">🎯 Misiones</button>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-bar">
+      <div class="chat-emoji-toggle" onclick="toggleChatEmoji()" title="Emojis">😊</div>
+      <textarea
+        id="chatInput"
+        class="chat-textarea"
+        placeholder="Pregunta sobre fauna silvestre..."
+        rows="1"
+        onkeydown="chatKeyDown(event)"
+        oninput="chatAutoResize(this)"
+      ></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" onclick="sendChatMessage()" title="Enviar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+    <!-- Emoji picker -->
+    <div class="chat-emoji-picker" id="chatEmojiPicker">
+      <div class="chat-emoji-grid" id="chatEmojiGrid"></div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="wt-toast" id="wtToast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

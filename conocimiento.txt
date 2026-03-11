@@ -1,0 +1,89 @@
+WildTrack: Enciclopedia Global de Fauna Silvestre y Estrategias de Conservación
+1. El Marco Científico de la Extinción
+La extinción es un proceso natural, pero la tasa actual (conocida como la Sexta Extinción Masiva) es de 100 a 1,000 veces superior a la tasa de fondo natural. El modelo de WildTrack se basa en la Ecología de Poblaciones para determinar la viabilidad de una especie.
+
+1.1 El Vórtice de Extinción
+Cuando una población disminuye por debajo de un umbral crítico, entra en un "vórtice" donde la endogamia y la deriva genética reducen la aptitud reproductiva, llevando inevitablemente a la desaparición si no hay intervención humana.
+
+2. Especies de "Paraguas" y "Clave"
+Para optimizar recursos, WildTrack prioriza especies cuya protección beneficia a todo un ecosistema:
+
+Especies Paraguas: Al proteger su amplio territorio (ej. Jaguar, Elefante), se protegen indirectamente cientos de otras especies que comparten ese hábitat.
+
+Especies Clave: Aquellas cuyo impacto en el ecosistema es desproporcionadamente grande en relación con su abundancia (ej. el Lobo Gris en Yellowstone o las Nutrias marinas en bosques de algas).
+
+3. Catálogo Detallado de Especies en Peligro Crítico (CR)
+3.1 El Leopardo de Amur (Panthera pardus orientalis)
+Hábitat: Bosques templados del Lejano Oriente ruso y el norte de China.
+
+Población: ~120 adultos en libertad.
+
+Biología: Es el felino más raro del mundo. Capaz de adaptarse a climas de hasta -30°C.
+
+Amenazas: Incendios forestales provocados para agricultura y la caza ilegal por su pelaje único.
+
+3.2 El Kakapo (Strigops habroptilus)
+Hábitat: Islas libres de depredadores en Nueva Zelanda.
+
+Población: ~247 individuos (monitoreados individualmente).
+
+Biología: El único loro del mundo no volador y nocturno. Tiene un sistema de apareamiento tipo "lek" donde los machos compiten en estadios naturales.
+
+Estrategia WildTrack: Uso de transmisores inteligentes para monitorear la dieta y el éxito de la eclosión de huevos.
+
+3.3 El Pangolín (Diversas especies)
+Estado: Las 8 especies están bajo amenaza, desde Vulnerables hasta Críticas.
+
+Dato Clave: Es el mamífero más traficado del mundo debido a la demanda de sus escamas en la medicina tradicional asiática.
+
+Función Ecológica: Controladores naturales de poblaciones de hormigas y termitas; un solo pangolín consume hasta 70 millones de insectos al año.
+
+4. Geografía de la Conservación: Puntos Calientes (Hotspots)
+WildTrack identifica áreas con alta biodiversidad bajo amenaza inminente:
+
+Cuenca del Amazonas: Vital para la regulación climática global; amenazada por la ganadería extensiva.
+
+Triángulo de Coral: Contiene el 76% de las especies de coral del mundo; amenazado por el aumento de la temperatura oceánica y la acidificación.
+
+Madagascar: El 90% de su vida silvestre es endémica (no existe en otro lugar), incluyendo a todos los lémures.
+
+5. Marco Legal Internacional: CITES
+El chatbot debe informar sobre el Convenio sobre el Comercio Internacional de Especies Amenazadas de Fauna y Flora Silvestres (CITES):
+
+Apéndice I: Especies en peligro de extinción cuyo comercio está prohibido (ej. Tigres, Gorilas).
+
+Apéndice II: Especies que no están necesariamente en peligro, pero cuyo comercio debe controlarse para evitar su uso incompatible con su supervivencia.
+
+6. Innovación Tecnológica en WildTrack
+Nuestro sistema utiliza herramientas de vanguardia para la protección animal:
+
+IA y Visión por Computadora: Identificación de individuos mediante patrones de manchas o rayas únicos (huellas dactilares naturales).
+
+eDNA (ADN Ambiental): Análisis de muestras de agua o suelo para detectar la presencia de especies esquivas sin necesidad de verlas físicamente.
+
+Smart Parks: Redes de sensores acústicos en selvas para detectar disparos o motosierras en tiempo real y alertar a los guardabosques.
+
+7. Estructura y Funciones de la Plataforma WildTrack
+La página de WildTrack es una Single Page Application (SPA) temática diseñada para educar y concientizar sobre las especies amenazadas. Incluye los siguientes componentes:
+
+7.1 Dashboard e Información General
+WildTrack monitorea 16 especies animales alrededor del mundo. El Dashboard (la pantalla principal) ofrece estadísticas en tiempo real sobre la población, riesgo de extinción y la esperanza de vida de estos animales. La base de datos incluye más de 8.7 millones de especies en total de forma teórica, con 41 mil en peligro. 
+
+La plataforma categoriza las especies en:
+Crítico (Rojo): Animales a punto de extinguirse (Ej. Rinoceronte Negro, Caimán del Orinoco).
+En Peligro (Naranja): Alto riesgo de extinción (Ej. Tigre de Bengala, Elefante Asiático).
+Vulnerable (Amarillo): Riesgo moderado (Ej. León Africano, Panda Gigante).
+Menor (Azul): Especies estables por ahora.
+
+7.2 Mapa Interactivo de Avistamientos
+Un radar interactivo global que muestra marcadores de colores (rojo, naranja, amarillo, azul) según el nivel de amenaza de la especie en su continente nativo. Permite filtrar y hacer clic para ver la ficha detallada de cada animal.
+
+7.3 Fichas Técnicas (Especies)
+Las Fichas Técnicas contienen tarjetas para todas las especies con datos detallados (población, hábitat, esperanza de vida). Tiene un potente buscador y filtros por continente (África, Asia, Sudamérica, Norteamérica, Europa, Oceanía) y categoría de riesgo.
+
+7.4 Sistema de Gamificación y Misiones (Sidebar)
+WildTrack motiva la conservación mediante misiones interactivas y un sistema de niveles:
+- Misiones: Los usuarios pueden completar tareas (ej. Explorador de la Sabana, Protector del Ártico) desde el panel lateral derecho para ganar puntos de experiencia (XP).
+- Niveles: Según la XP acumulada, los usuarios suben de rango, desde "Observador" hasta "Guardián Elite".
+- Logros: Completar misiones y subir niveles desbloquea insignias especiales (Ej. Primer Avistamiento, Gran Explorador).
+- Cada misión representa un esfuerzo educativo para apoyar causas reales y aumentar el conocimiento del usuario sobre biodiversidad.

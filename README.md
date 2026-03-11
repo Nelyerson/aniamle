@@ -1,2 +1,2 @@
-# aniamle
-animale
+# animales
+animales
