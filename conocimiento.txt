@@ -107,3 +107,50 @@ La Unión Internacional para la Conservación de la Naturaleza (UICN) clasifica 
 
 10. Tendencias poblacionales en WildTrack:
 Las tendencias se miden como porcentaje de cambio anual. Verde indica crecimiento poblacional (positivo), rojo indica decrecimiento (negativo). El Leopardo de Amur con +5% anual y el Rinoceronte Negro con +3.2% son las recuperaciones más exitosas. El Zorro Ártico con -5.1% es el más preocupante entre las especies de menor riesgo. El Panda Gigante con +2.1% refleja décadas de esfuerzo del gobierno chino.
+
+=== LISTA DETALLADA DE ANIMALES Y DATOS VIVOS ===
+
+León Africano: Emoji 🦁. ID 1. Género Panthera leo. Vive en África, hábitat Sabana. Riesgo: vulnerable. Población: 23,000. Vida: 14 años. Tendencia: -3.5%.
+Panda Gigante: Emoji 🐼. ID 2. Género Ailuropoda melanoleuca. Vive en Asia, hábitat Bambusar. Riesgo: vulnerable. Población: 1,864. Vida: 20 años. Tendencia: +2.1%.
+Tigre de Bengala: Emoji 🐅. ID 3. Género Panthera tigris tigris. Vive en Asia, hábitat Selva. Riesgo: peligro. Población: 2,500. Vida: 15 años. Tendencia: +1.8%.
+Rinoceronte Negro: Emoji 🦏. ID 4. Género Diceros bicornis. Vive en África, hábitat Sabana. Riesgo: crítico. Población: 6,195. Vida: 35 años. Tendencia: +3.2%.
+Elefante Asiático: Emoji 🐘. ID 5. Género Elephas maximus. Vive en Asia, hábitat Bosque. Riesgo: peligro. Población: 48,000. Vida: 60 años. Tendencia: -1.4%.
+Águila Arpía: Emoji 🦅. ID 6. Género Harpia harpyja. Vive en Sudamérica, hábitat Selva. Riesgo: vulnerable. Población: 50,000. Vida: 35 años. Tendencia: -0.8%.
+Ballena Azul: Emoji 🐋. ID 7. Género Balaenoptera musculus. Vive en Oceanía, hábitat Océano. Riesgo: peligro. Población: 10,000. Vida: 90 años. Tendencia: +0.5%.
+Zorro Ártico: Emoji 🦊. ID 8. Género Vulpes lagopus. Vive en Europa, hábitat Tundra. Riesgo: preocupación menor. Población: 630,000. Vida: 6 años. Tendencia: -5.1%.
+Caimán del Orinoco: Emoji 🐊. ID 9. Género Crocodylus intermedius. Vive en Sudamérica, hábitat Río. Riesgo: crítico. Población: 1,500. Vida: 75 años. Tendencia: +1.0%.
+Puma: Emoji 🦁. ID 10. Género Puma concolor. Vive en Norte América, hábitat Montaña. Riesgo: preocupación menor. Población: 80,000. Vida: 12 años. Tendencia: -2.2%.
+Lobo Gris: Emoji 🐺. ID 11. Género Canis lupus. Vive en Europa, hábitat Bosque. Riesgo: preocupación menor. Población: 300,000. Vida: 13 años. Tendencia: +1.1%.
+Cebra de Grevy: Emoji 🦓. ID 12. Género Equus grevyi. Vive en África, hábitat Sabana. Riesgo: peligro. Población: 2,250. Vida: 25 años. Tendencia: -4.0%.
+Guepardo: Emoji 🦁. ID 13. Género Acinonyx jubatus. Vive en África, hábitat Sabana. Riesgo: vulnerable. Población: 7,000. Vida: 12 años. Tendencia: -3.0%.
+Tiburón Blanco: Emoji 🦈. ID 14. Género Carcharodon carcharias. Vive en Oceanía, hábitat Océano. Riesgo: vulnerable. Población: 3,500. Vida: 70 años. Tendencia: -2.5%.
+Guacamayo Jacinto: Emoji 🦜. ID 15. Género Anodorhynchus hyacinthinus. Vive en Sudamérica, hábitat Pantanal. Riesgo: vulnerable. Población: 6,500. Vida: 50 años. Tendencia: +0.3%.
+Leopardo de Amur: Emoji 豹. ID 16. Género Panthera pardus orientalis. Vive en Asia, hábitat Bosque. Riesgo: crítico. Población: 100 adultos. Vida: 15 años. Tendencia: +5.0%.
+
+=== SISTEMA DE MISIONES Y GAMIFICACIÓN DETALLADO ===
+
+Misiones Disponibles:
+1. Explorador de la Sabana (m1): Observa 5 especies africanas. Recompensa: 15 XP. Icono: 🌾.
+2. Protector del Ártico (m2): Aprende sobre 3 especies polares. Recompensa: 20 XP. Icono: ❄️.
+3. Guardián del Océano (m3): Descubre 4 especies marinas. Recompensa: 25 XP. Icono: 🌊.
+4. Rastreador de Felinos (m4): Identifica 4 grandes felinos. Recompensa: 18 XP. Icono: 🐾.
+5. Defensor de la Selva (m5): Explora animales del Amazonas. Recompensa: 22 XP. Icono: 🌿.
+
+Logros Desbloqueables:
+- Primer Avistamiento (a1): Se obtiene al completar la primera misión. Icono: 🥇.
+- Naturalista (a2): Se obtiene al alcanzar el nivel 3. Icono: 🌿.
+- Maestro de la Fauna (a3): Se obtiene al completar todas las misiones. Icono: 🦅.
+- Gran Explorador (a4): Se obtiene al acumular 100 XP. Icono: 🔭.
+
+Sistema de Niveles (Ranks):
+- Nivel 1: Observador (0 a 100 XP).
+- Nivel 2: Rastreador (100 a 200 XP).
+- Nivel 3: Naturalista (200 a 350 XP).
+- Nivel 4: Explorador (350 a 500 XP).
+- Nivel 5: Guardián Elite (más de 500 XP).
+
+=== ESTADÍSTICAS GLOBALES ACTUALES ===
+La página monitorea actualmente 16 especies. Hay 3 especies en estado crítico. La población total monitoreada es de aproximadamente 1.1 millones de individuos. La esperanza de vida promedio de los animales registrados es de 34 años.
+Asia es el continente con más especies (5), seguido de África (4), Sudamérica (3), Europa (2), Oceanía (2) y Norte América (1).
+Las especies con mejores tendencias de recuperación son el Leopardo de Amur (+5%) y el Rinoceronte Negro (+3.2%).
+Las especies con tendencias más preocupantes son el Zorro Ártico (-5.1%) y la Cebra de Grevy (-4%).
