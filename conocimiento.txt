@@ -154,3 +154,37 @@ La página monitorea actualmente 16 especies. Hay 3 especies en estado crítico.
 Asia es el continente con más especies (5), seguido de África (4), Sudamérica (3), Europa (2), Oceanía (2) y Norte América (1).
 Las especies con mejores tendencias de recuperación son el Leopardo de Amur (+5%) y el Rinoceronte Negro (+3.2%).
 Las especies con tendencias más preocupantes son el Zorro Ártico (-5.1%) y la Cebra de Grevy (-4%).
+
+=== DETALLES TÉCNICOS Y ARQUITECTURA DEL SITIO ===
+
+Tecnologías: WildTrack está construido con estándares web modernos: HTML5 semántico, CSS3 avanzado (con Flexbox y Grid) y JavaScript Vanilla (ES6+). No utiliza frameworks pesados como React o Vue, lo que garantiza una carga ultrarrápida.
+Estética y Diseño: Sigue una línea "Apple Style" con minimalismo, bordes muy redondeados (border-radius), sombras suaves, y efectos de "glassmorphism" (fondo translúcido con desenfoque). Utiliza la tipografía "Inter" de Google Fonts.
+Componentes Visuales:
+- Hero: Incluye orbes animados (orbs) de colores esmeralda y naranja que se mueven suavemente al fondo.
+- Glass Cards: Las secciones de estadísticas y mapas están contenidas en tarjetas con efecto cristal.
+- Sistema de Toasts: Notificaciones emergentes rápidas para acciones como completar misiones o errores.
+- Gráficos SVG: El gráfico donut y las barras de progreso son elementos vectoriales (SVG) generados dinámicamente para evitar pérdida de calidad.
+
+=== PALETA DE COLORES OFICIAL ===
+- Crítico (Rojo): #ef4444.
+- En Peligro (Naranja): #f97316.
+- Vulnerable (Amarillo): #eab308.
+- Preocupación Menor (Azul): #3b82f6.
+- Acentos Esmeralda (Éxito/XP): #10b981.
+- Fondos: Gradientes oscuros y translúcidos.
+
+=== FUNCIONAMIENTO INTERNO DEL CHATBOT RAG ===
+Procesamiento de Lenguaje: WildBot utiliza un conjunto de palabras vacías (stopwords) en español para limpiar las preguntas del usuario (ej: "el", "la", "que", "para").
+Algoritmo de Búsqueda: Implementa TF-IDF para medir la relevancia de las palabras y "Similaridad Coseno" para comparar vectores de texto.
+Umbral de Precisión (Threshold): El sistema está configurado con un umbral de 0.08 por defecto (CONFIG.ragThreshold) para filtrar respuestas irrelevantes. Si la similitud es menor, WildBot informa que no encontró información.
+Limitaciones Locales: Debido a la seguridad de los navegadores, la carga de conocimiento.txt requiere un servidor local para evitar errores de CORS si se usa el protocolo file://.
+
+=== ESTRUCTURA DE NAVEGACIÓN ===
+La página está dividida en 4 secciones principales accesibles desde la barra superior (Navbar):
+1. Dashboard (Panel de control con cifras globales).
+2. Mapa (Visualización geográfica de especies).
+3. Especies (Catálogo completo con filtros de búsqueda).
+4. Misiones (Panel lateral de XP y gamificación).
+
+=== FUENTE DE DATOS Y CRÉDITOS ===
+Toda la información sobre el estado de conservación proviene de la Lista Roja de la UICN (Unión Internacional para la Conservación de la Naturaleza). El proyecto es educativo y busca la concienciación sobre la sexta extinción masiva. No utiliza bases de datos SQL, toda la información está contenida en los archivos del lado del cliente para máxima privacidad y portabilidad.
