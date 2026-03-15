@@ -1,89 +1,109 @@
 WildTrack: Enciclopedia Global de Fauna Silvestre y Estrategias de Conservación
-1. El Marco Científico de la Extinción
+
+=== SOBRE WILDTRACK ===
+WildTrack es una plataforma educativa de conservación de fauna silvestre. La página monitorea 16 especies en tiempo real, mostrando su estado de conservación, población estimada, tendencias y distribución geográfica. El proyecto busca concienciar sobre la biodiversidad global y la crisis de extinción masiva que vivimos. Está construida con HTML5, CSS3 y JavaScript Vanilla (ES6+), sin necesidad de servidor. La plataforma recibe datos de la Lista Roja de la UICN.
+
+=== SECCIONES DE LA PÁGINA ===
+
+HERO / BIENVENIDA:
+La sección principal muestra el título "Fauna Silvestre en Peligro" con un gradiente esmeralda-naranja y orbes animados de fondo. Presenta mini-estadísticas globales: 8.7 millones de especies conocidas en el planeta, más de 41 mil especies en peligro según la UICN, y 195 países comprometidos con la conservación. Incluye tarjetas flotantes del León Africano, el Panda Gigante y el Águila Arpía. Los botones CTA permiten ir al Dashboard o iniciar misiones.
+
+DASHBOARD DE ESTADÍSTICAS:
+El dashboard muestra 4 tarjetas animadas: 16 especies monitoreadas (con 3 nuevas incorporaciones), 3 en estado crítico (alerta), población total de 1.1 millones de individuos (bajó 1.8%), y esperanza de vida promedio de 34 años (estable). También hay un gráfico donut SVG que muestra la distribución por nivel de riesgo (crítico, en peligro, vulnerable, preocupación menor). Las barras de tendencia poblacional muestran el estado de la Ballena Azul (72%), Panda Gigante (91%), Leopardo de Amur (85%), Tigre de Bengala (63%), Guepardo (40%) y Zorro Ártico (28%). La cobertura por continente indica: Asia 5 especies, África 4, Sudamérica 3, Europa 2, Norte América 1, Oceanía 2.
+
+MAPA DE AVISTAMIENTOS:
+El mapa interactivo muestra 16 marcadores circulares pulsantes distribuidos globalmente. Cada marcador está coloreado según el nivel de riesgo: rojo para especies críticas (3 marcadores), naranja para en peligro (4 marcadores), amarillo para vulnerables (5 marcadores), azul para preocupación menor (4 marcadores). Al pasar el ratón aparece un tooltip con el nombre y estado. Al hacer clic se muestra la ficha completa del animal con población, hábitat y esperanza de vida. Hay botones filtro para ver: Todos, Crítico, En Peligro y Vulnerable.
+
+FICHAS TÉCNICAS:
+Muestra cards de las 16 especies con búsqueda en tiempo real. Se puede filtrar por continente (África, Asia, Sudamérica, Europa, Norte América, Oceanía) y por nivel de riesgo (Todos, Crítico, En Peligro, Vulnerable, Menor). Cada ficha incluye: emoji, nombre científico, continente, nivel de riesgo, población estimada, esperanza de vida, hábitat y tendencia poblacional. El filtrado es instantáneo sin recargar la página.
+
+MISIONES Y GAMIFICACIÓN:
+El sistema de gamificación incluye 5 misiones activas de conservación: Explorador de la Sabana (observar 5 especies africanas, +15 XP), Protector del Ártico (aprender sobre 3 especies polares, +20 XP), Guardián del Océano (descubrir 4 especies marinas, +25 XP), Rastreador de Felinos (identificar 4 grandes felinos, +18 XP), y Defensor de la Selva (explorar animales del Amazonas, +22 XP). El sistema de niveles va de Observador (0-100 XP), Rastreador (100-200 XP), Naturalista (200-350 XP), Explorador (350-500 XP) hasta Guardián Elite (500+ XP). Hay 4 logros desbloqueables: Primer Avistamiento (completar 1 misión), Naturalista (alcanzar nivel 3), Maestro de la Fauna (completar todas las misiones), Gran Explorador (acumular 100 XP). El XP acumulado se muestra en la barra de navegación.
+
+CHATBOT WILDBOT:
+El chatbot flotante llamado WildBot está disponible en la esquina inferior derecha. Usa inteligencia artificial con RAG (Retrieval Augmented Generation) y TF-IDF con similaridad coseno para encontrar respuestas relevantes. Puede responder preguntas sobre animales específicos, estadísticas, misiones, logros, y conservación. También tiene una detector de intenciones para consultas muy frecuentes.
+
+=== ANIMALES MONITOREADOS ===
+
+León Africano (Panthera leo):
+Continente: África. Hábitat: Sabana. Estado: Vulnerable. Población: ~23,000 individuos. Esperanza de vida: 14 años. Tendencia: -3.5% (en descenso). El rey de la sabana africana enfrenta pérdida de hábitat, conflictos con ganaderos y caza furtiva. Es un animal social que vive en manadas llamadas "prides". Se encuentra en África subsahariana. Es una especie paraguas: proteger su territorio beneficia a cientos de otras especies de la sabana.
+
+Panda Gigante (Ailuropoda melanoleuca):
+Continente: Asia. Hábitat: Bosques de bambú. Estado: Vulnerable. Población: ~1,864 individuos. Esperanza de vida: 20 años. Tendencia: +2.1% (en aumento). El panda gigante es símbolo de la conservación mundial. Come principalmente bambú y necesita grandes extensiones de bosques montañosos en China central. Los esfuerzos de conservación han logrado aumentar su población en los últimos años. Es el emblema de la WWF.
+
+Tigre de Bengala (Panthera tigris tigris):
+Continente: Asia. Hábitat: Selva. Estado: En Peligro. Población: ~2,500 individuos. Esperanza de vida: 15 años. Tendencia: +1.8% (en aumento). El tigre más numeroso del mundo, vive en India, Bangladesh y Nepal. Es cazado furtivamente por sus huesos y piel, y su hábitat se reduce por la deforestación. El Proyecto Tigre de India ha logrado recuperaciones significativas.
+
+Rinoceronte Negro (Diceros bicornis):
+Continente: África. Hábitat: Sabana. Estado: Crítico. Población: ~6,195 individuos. Esperanza de vida: 35 años. Tendencia: +3.2% (en aumento). El rinoceronte negro ha recuperado números gracias a programas intensivos de conservación. Su cuerno es el principal motivo de caza furtiva, valorado en mercados asiáticos de medicina tradicional. Tiene labio prensil para alimentarse de ramas y arbustos.
+
+Elefante Asiático (Elephas maximus):
+Continente: Asia. Hábitat: Bosque. Estado: En Peligro. Población: ~48,000 individuos. Esperanza de vida: 60 años. Tendencia: -1.4% (en descenso). Más pequeño que el elefante africano, el elefante asiático vive en India, Sri Lanka, Sumatra y Tailandia. Enfrenta pérdida de hábitat por agricultura y conflictos con comunidades humanas. Es considerado sagrado en muchas culturas asiáticas.
+
+Águila Arpía (Harpia harpyja):
+Continente: Sudamérica. Hábitat: Selva tropical. Estado: Vulnerable. Población: ~50,000 individuos. Esperanza de vida: 35 años. Tendencia: -0.8% (en descenso). El ave de presa más poderosa de América. Vive en selvas tropicales de México a Bolivia y Brasil. Sus presas incluyen monos y perezosos. La deforestación del Amazonas es su principal amenaza. Tiene una envergadura de hasta 2 metros.
+
+Ballena Azul (Balaenoptera musculus):
+Continente: Oceanía. Hábitat: Océano. Estado: En Peligro. Población: ~10,000 individuos. Esperanza de vida: 90 años. Tendencia: +0.5% (en leve aumento). Es el animal más grande que ha existido en la Tierra, llegando a medir 30 metros y pesar 180 toneladas. Se alimenta exclusivamente de krill. Casi fue llevada a la extinción por la caza comercial de ballenas en el siglo XX. La moratoria internacional de 1986 ha permitido una lenta recuperación.
+
+Zorro Ártico (Vulpes lagopus):
+Continente: Europa. Hábitat: Tundra ártica. Estado: Preocupación Menor. Población: ~630,000 individuos. Esperanza de vida: 6 años. Tendencia: -5.1% (en descenso acelerado). Vive en la tundra circumpolar ártica de Escandinavia, Rusia, Canadá e Islandia. Cambia de pelaje blanco en invierno a marrón en verano como camuflaje. El cambio climático reduce su hábitat y lo expone a competencia con el zorro rojo que avanza hacia el norte.
+
+Caimán del Orinoco (Crocodylus intermedius):
+Continente: Sudamérica. Hábitat: Ríos. Estado: Crítico. Población: ~1,500 individuos. Esperanza de vida: 75 años. Tendencia: +1.0% (leve aumento). Es el mayor depredador de agua dulce de América del Sur y el reptil más grande de América. Vive en los ríos Orinoco y Meta de Venezuela y Colombia. Fue cazado masivamente por su piel hasta casi extinguirse. Los programas de cría en cautiverio han empezado a reintroducir individuos.
+
+Puma (Puma concolor):
+Continente: Norte América. Hábitat: Montaña y bosque. Estado: Preocupación Menor. Población: ~80,000 individuos. Esperanza de vida: 12 años. Tendencia: -2.2% (en descenso). El felino más distribuido de América, desde Canadá hasta la Patagonia. También conocido como León de montaña o Cougar. Cazador solitario y nocturno. La fragmentación del hábitat por carreteras y urbanización reduce sus poblaciones en Norte América.
+
+Lobo Gris (Canis lupus):
+Continente: Europa. Hábitat: Bosque. Estado: Preocupación Menor. Población: ~300,000 individuos. Esperanza de vida: 13 años. Tendencia: +1.1% (en aumento). El lobo gris es una especie clave en los ecosistemas donde vive. En Yellowstone, su reintroducción en 1995-96 desencadenó una "cascada trófica" que transformó todo el ecosistema, controlando ciervos y permitiendo la regeneración de la vegetación. Es un animal social que vive en manadas con jerarquía estricta.
+
+Cebra de Grevy (Equus grevyi):
+Continente: África. Hábitat: Sabana semiárida. Estado: En Peligro. Población: ~2,250 individuos. Esperanza de vida: 25 años. Tendencia: -4.0% (en descenso). Es la especie de cebra más grande y la más amenazada. Vive en el norte de Kenia y sur de Etiopía. Sus rayas son más estrechas que las de otras cebras. Enfrenta pérdida de pastizales por ganadería y competencia por el agua en zonas áridas.
+
+Guepardo (Acinonyx jubatus):
+Continente: África. Hábitat: Sabana. Estado: Vulnerable. Población: ~7,000 individuos. Esperanza de vida: 12 años. Tendencia: -3.0% (en descenso). El animal terrestre más rápido del mundo, alcanza 120 km/h en carreras cortas. A diferencia de otros felinos, el guepardo no puede rugir. Es el único felino con garras semirretráctiles. La cría de guepardos en cautiverio es muy difícil. Enfrenta conflictos con ganaderos y pérdida de presas.
+
+Tiburón Blanco (Carcharodon carcharias):
+Continente: Oceanía. Hábitat: Océano. Estado: Vulnerable. Población: ~3,500 individuos. Esperanza de vida: 70 años. Tendencia: -2.5% (en descenso). El tiburón blanco es el mayor pez depredador del mundo. Juega un rol crucial como superdepredador marino regulando las poblaciones de focas, delfines y peces. La pesca accidental en redes y la caza por sus aletas lo amenazan gravemente. Tiene más de 50 años de madurez sexual tardía.
+
+Guacamayo Jacinto (Anodorhynchus hyacinthinus):
+Continente: Sudamérica. Hábitat: Pantanal y Amazonia. Estado: Vulnerable. Población: ~6,500 individuos. Esperanza de vida: 50 años. Tendencia: +0.3% (estabilizándose). El loro más grande del mundo, con plumaje enteramente azul cobalto. Vive en Brasil, Bolivia y Paraguay. Su principal amenaza es el tráfico ilegal de mascotas. Depende del árbol manduvi para anidar. Programas de cajas nido artificiales han ayudado a su recuperación en el Pantanal.
+
+Leopardo de Amur (Panthera pardus orientalis):
+Continente: Asia. Hábitat: Bosques templados. Estado: Crítico. Población: ~120 adultos en libertad. Esperanza de vida: 15 años. Tendencia: +5.0% (en aumento). Es el felino más raro del mundo. Vive en el Lejano Oriente ruso y norte de China. Capaz de adaptarse a climas de hasta -30°C. Sus manchas son más espaciadas que las de otros leopardos. La Reserva Natural "Land of the Leopard" en Rusia ha sido clave en su recuperación. Amenazado por incendios forestales y caza furtiva de su pelaje único.
+
+=== MARCO CIENTÍFICO Y CONSERVACIÓN ===
+
+1. El Marco Científico de la Extinción:
 La extinción es un proceso natural, pero la tasa actual (conocida como la Sexta Extinción Masiva) es de 100 a 1,000 veces superior a la tasa de fondo natural. El modelo de WildTrack se basa en la Ecología de Poblaciones para determinar la viabilidad de una especie.
 
-1.1 El Vórtice de Extinción
+1.1 El Vórtice de Extinción:
 Cuando una población disminuye por debajo de un umbral crítico, entra en un "vórtice" donde la endogamia y la deriva genética reducen la aptitud reproductiva, llevando inevitablemente a la desaparición si no hay intervención humana.
 
-2. Especies de "Paraguas" y "Clave"
-Para optimizar recursos, WildTrack prioriza especies cuya protección beneficia a todo un ecosistema:
+2. Especies de "Paraguas" y "Clave":
+Para optimizar recursos, WildTrack prioriza especies cuya protección beneficia a todo un ecosistema. Especies Paraguas: Al proteger su amplio territorio (ej. Jaguar, Elefante), se protegen indirectamente cientos de otras especies que comparten ese hábitat. Especies Clave: Aquellas cuyo impacto en el ecosistema es desproporcionadamente grande en relación con su abundancia (ej. el Lobo Gris en Yellowstone o las Nutrias marinas en bosques de algas).
 
-Especies Paraguas: Al proteger su amplio territorio (ej. Jaguar, Elefante), se protegen indirectamente cientos de otras especies que comparten ese hábitat.
+3. Geografía de la Conservación: Puntos Calientes (Hotspots):
+WildTrack identifica áreas con alta biodiversidad bajo amenaza inminente. Cuenca del Amazonas: Vital para la regulación climática global; amenazada por la ganadería extensiva y la deforestación. Triángulo de Coral: Contiene el 76% de las especies de coral del mundo; amenazado por el aumento de la temperatura oceánica y la acidificación. Madagascar: El 90% de su vida silvestre es endémica (no existe en otro lugar), incluyendo a todos los lémures.
 
-Especies Clave: Aquellas cuyo impacto en el ecosistema es desproporcionadamente grande en relación con su abundancia (ej. el Lobo Gris en Yellowstone o las Nutrias marinas en bosques de algas).
+4. Marco Legal Internacional CITES:
+El Convenio sobre el Comercio Internacional de Especies Amenazadas de Fauna y Flora Silvestres (CITES) protege especies mediante tres apéndices. Apéndice I: Especies en peligro de extinción cuyo comercio está prohibido (ej. Tigres, Gorilas, Leopardo de Amur). Apéndice II: Especies que no están necesariamente en peligro, pero cuyo comercio debe controlarse para evitar su uso incompatible con su supervivencia (ej. Guepardo, Ballena Azul). Apéndice III: Especies protegidas en al menos un país que ha solicitado asistencia.
 
-3. Catálogo Detallado de Especies en Peligro Crítico (CR)
-3.1 El Leopardo de Amur (Panthera pardus orientalis)
-Hábitat: Bosques templados del Lejano Oriente ruso y el norte de China.
+5. Innovación Tecnológica en WildTrack:
+Nuestro sistema utiliza herramientas de vanguardia para la protección animal. IA y Visión por Computadora: Identificación de individuos mediante patrones de manchas o rayas únicos (equivalentes a huellas dactilares naturales). eDNA (ADN Ambiental): Análisis de muestras de agua o suelo para detectar la presencia de especies esquivas sin necesidad de verlas físicamente. Smart Parks: Redes de sensores acústicos en selvas para detectar disparos o motosierras en tiempo real y alertar a los guardabosques. Drones de vigilancia: Monitoreo aéreo de reservas naturales en zonas de difícil acceso.
 
-Población: ~120 adultos en libertad.
+6. Kakapo (Strigops habroptilus):
+El único loro del mundo no volador y nocturno. Vive en islas libres de depredadores en Nueva Zelanda. Población: ~247 individuos (monitoreados individualmente con nombre propio). Tiene un sistema de apareamiento tipo "lek" donde los machos compiten en estadios naturales. WildTrack usa transmisores inteligentes para monitorear su dieta y el éxito de eclosión de huevos.
 
-Biología: Es el felino más raro del mundo. Capaz de adaptarse a climas de hasta -30°C.
+7. Pangolín (Diversas especies):
+Las 8 especies de pangolines están bajo amenaza, desde Vulnerables hasta Críticas. Es el mamífero más traficado del mundo debido a la demanda de sus escamas en la medicina tradicional asiática. Función ecológica vital: controladores naturales de poblaciones de hormigas y termitas; un solo pangolín consume hasta 70 millones de insectos al año.
 
-Amenazas: Incendios forestales provocados para agricultura y la caza ilegal por su pelaje único.
+8. Cómo puedes ayudar a conservar la fauna:
+Completa las misiones en WildTrack para apoyar causas reales. Apoya organizaciones como WWF, UICN, WCS o National Geographic Society. Evita productos ilegales de origen animal como marfil, pieles o escamas. Difunde información sobre biodiversidad en tu comunidad y redes sociales. Planta árboles nativos y participa en actividades de reforestación. Reduce tu huella de carbono para combatir el cambio climático que amenaza ecosistemas.
 
-3.2 El Kakapo (Strigops habroptilus)
-Hábitat: Islas libres de depredadores en Nueva Zelanda.
+9. La UICN y sus categorías de riesgo:
+La Unión Internacional para la Conservación de la Naturaleza (UICN) clasifica las especies según estas categorías: EX (Extinta), EW (Extinta en estado silvestre), CR (En Peligro Crítico), EN (En Peligro), VU (Vulnerable), NT (Casi Amenazada), LC (Preocupación Menor), DD (Datos Insuficientes), NE (No Evaluada). WildTrack monitorea principalmente las categorías CR, EN, VU y LC.
 
-Población: ~247 individuos (monitoreados individualmente).
-
-Biología: El único loro del mundo no volador y nocturno. Tiene un sistema de apareamiento tipo "lek" donde los machos compiten en estadios naturales.
-
-Estrategia WildTrack: Uso de transmisores inteligentes para monitorear la dieta y el éxito de la eclosión de huevos.
-
-3.3 El Pangolín (Diversas especies)
-Estado: Las 8 especies están bajo amenaza, desde Vulnerables hasta Críticas.
-
-Dato Clave: Es el mamífero más traficado del mundo debido a la demanda de sus escamas en la medicina tradicional asiática.
-
-Función Ecológica: Controladores naturales de poblaciones de hormigas y termitas; un solo pangolín consume hasta 70 millones de insectos al año.
-
-4. Geografía de la Conservación: Puntos Calientes (Hotspots)
-WildTrack identifica áreas con alta biodiversidad bajo amenaza inminente:
-
-Cuenca del Amazonas: Vital para la regulación climática global; amenazada por la ganadería extensiva.
-
-Triángulo de Coral: Contiene el 76% de las especies de coral del mundo; amenazado por el aumento de la temperatura oceánica y la acidificación.
-
-Madagascar: El 90% de su vida silvestre es endémica (no existe en otro lugar), incluyendo a todos los lémures.
-
-5. Marco Legal Internacional: CITES
-El chatbot debe informar sobre el Convenio sobre el Comercio Internacional de Especies Amenazadas de Fauna y Flora Silvestres (CITES):
-
-Apéndice I: Especies en peligro de extinción cuyo comercio está prohibido (ej. Tigres, Gorilas).
-
-Apéndice II: Especies que no están necesariamente en peligro, pero cuyo comercio debe controlarse para evitar su uso incompatible con su supervivencia.
-
-6. Innovación Tecnológica en WildTrack
-Nuestro sistema utiliza herramientas de vanguardia para la protección animal:
-
-IA y Visión por Computadora: Identificación de individuos mediante patrones de manchas o rayas únicos (huellas dactilares naturales).
-
-eDNA (ADN Ambiental): Análisis de muestras de agua o suelo para detectar la presencia de especies esquivas sin necesidad de verlas físicamente.
-
-Smart Parks: Redes de sensores acústicos en selvas para detectar disparos o motosierras en tiempo real y alertar a los guardabosques.
-
-7. Estructura y Funciones de la Plataforma WildTrack
-La página de WildTrack es una Single Page Application (SPA) temática diseñada para educar y concientizar sobre las especies amenazadas. Incluye los siguientes componentes:
-
-7.1 Dashboard e Información General
-WildTrack monitorea 16 especies animales alrededor del mundo. El Dashboard (la pantalla principal) ofrece estadísticas en tiempo real sobre la población, riesgo de extinción y la esperanza de vida de estos animales. La base de datos incluye más de 8.7 millones de especies en total de forma teórica, con 41 mil en peligro. 
-
-La plataforma categoriza las especies en:
-Crítico (Rojo): Animales a punto de extinguirse (Ej. Rinoceronte Negro, Caimán del Orinoco).
-En Peligro (Naranja): Alto riesgo de extinción (Ej. Tigre de Bengala, Elefante Asiático).
-Vulnerable (Amarillo): Riesgo moderado (Ej. León Africano, Panda Gigante).
-Menor (Azul): Especies estables por ahora.
-
-7.2 Mapa Interactivo de Avistamientos
-Un radar interactivo global que muestra marcadores de colores (rojo, naranja, amarillo, azul) según el nivel de amenaza de la especie en su continente nativo. Permite filtrar y hacer clic para ver la ficha detallada de cada animal.
-
-7.3 Fichas Técnicas (Especies)
-Las Fichas Técnicas contienen tarjetas para todas las especies con datos detallados (población, hábitat, esperanza de vida). Tiene un potente buscador y filtros por continente (África, Asia, Sudamérica, Norteamérica, Europa, Oceanía) y categoría de riesgo.
-
-7.4 Sistema de Gamificación y Misiones (Sidebar)
-WildTrack motiva la conservación mediante misiones interactivas y un sistema de niveles:
-- Misiones: Los usuarios pueden completar tareas (ej. Explorador de la Sabana, Protector del Ártico) desde el panel lateral derecho para ganar puntos de experiencia (XP).
-- Niveles: Según la XP acumulada, los usuarios suben de rango, desde "Observador" hasta "Guardián Elite".
-- Logros: Completar misiones y subir niveles desbloquea insignias especiales (Ej. Primer Avistamiento, Gran Explorador).
-- Cada misión representa un esfuerzo educativo para apoyar causas reales y aumentar el conocimiento del usuario sobre biodiversidad.
+10. Tendencias poblacionales en WildTrack:
+Las tendencias se miden como porcentaje de cambio anual. Verde indica crecimiento poblacional (positivo), rojo indica decrecimiento (negativo). El Leopardo de Amur con +5% anual y el Rinoceronte Negro con +3.2% son las recuperaciones más exitosas. El Zorro Ártico con -5.1% es el más preocupante entre las especies de menor riesgo. El Panda Gigante con +2.1% refleja décadas de esfuerzo del gobierno chino.
