@@ -188,3 +188,42 @@ La página está dividida en 4 secciones principales accesibles desde la barra s
 
 === FUENTE DE DATOS Y CRÉDITOS ===
 Toda la información sobre el estado de conservación proviene de la Lista Roja de la UICN (Unión Internacional para la Conservación de la Naturaleza). El proyecto es educativo y busca la concienciación sobre la sexta extinción masiva. No utiliza bases de datos SQL, toda la información está contenida en los archivos del lado del cliente para máxima privacidad y portabilidad.
+
+=== ESPECIFICACIONES DE DISEÑO Y CSS (SISTEMA VISUAL) ===
+
+Identidad Visual: WildTrack utiliza un sistema de diseño oscuro (Dark Mode) con acentos vibrantes de Esmeralda y Naranja.
+Variables CSS Principales:
+- Fondo primario: #0a0f0d.
+- Acento Esmeralda: #10b981 (brillo: rgba(16, 185, 129, 0.2)).
+- Acento Naranja: #f97316 (brillo: rgba(249, 115, 22, 0.2)).
+- Glassmorphism: Se logra mediante la variable --glass-bg (blanco con 4% de opacidad) y un desenfoque de fondo de 16px a 20px (backdrop-filter: blur).
+- Tipografía: Se utiliza la familia 'Inter' de Google Fonts, con pesos que van desde 300 hasta 800.
+Efectos de Animación:
+- Orbes Flotantes (Hero): Tres esferas (orbs) gigantes con desenfoque de 80px que flotan en el fondo. Se mueven usando la animación CSS 'float' con una duración de 8 segundos.
+- Tarjetas Flotantes: Las tarjetas de animales del Hero tienen una animación de levitación (floatCard) con retrasos escalonados (0s, 1.2s, 2.4s).
+- Barra de Navegación: Cambia su opacidad y añade una sombra al hacer scroll mediante la clase 'scrolled'.
+- Scrollbar Personalizada: De color esmeralda (#10b981) y con un ancho fino de 6px para no romper la estética.
+
+=== LÓGICA DE PROGRAMACIÓN Y FLUJOS DE DATOS ===
+
+Manejo del Estado:
+- La aplicación mantiene el progreso del usuario (`userXP`) y los filtros activos (`activeContinentFilter`, `activeRiskFilter`) de forma global.
+- Al ganar XP, se activan funciones de actualización visual que mueven la barra de progreso lateral y cambian el rango del explorador (Observador, Rastreador, etc.).
+Filtrado Dinámico:
+- La función `filterAnimals` cruza tres criterios en tiempo real: búsqueda por texto, filtro de continente y filtro de riesgo.
+- Los resultados se muestran con una animación de entrada escalonada (delay por índice) en las tarjetas de especies.
+Mapa Interactivo:
+- Utiliza coordenadas porcentuales (top, left) para posicionar los 16 marcadores sobre un fondo que simula un mapa mundi con cuadrícula.
+- Los marcadores incluyen una animación de pulso infinito para llamar la atención sobre zonas críticas.
+
+=== MANUAL DE USO DEL PORTAL ===
+
+Cómo buscar animales: Puedes usar la barra de búsqueda en la sección de "Especies". Acepta nombres comunes, nombres científicos o tipos de hábitat.
+Cómo ganar puntos (XP): Debes completar las misiones que aparecen en el panel lateral derecho. Al completar una, tu XP subirá automáticamente.
+Filtros Rápidos: En el Mapa puedes filtrar por nivel de riesgo haciendo clic en los botones superiores (Crítico, Peligro, Vulnerable).
+Fichas Técnicas: Si haces clic en una tarjeta de animal, verás detalles adicionales. Las tarjetas muestran una tendencia porcentual (flecha verde arriba o roja abajo).
+
+=== METADATOS Y SEO ===
+Título Oficial: WildTrack — Portal de Fauna Silvestre.
+Descripción Meta: "Explora y protege la fauna silvestre del mundo. Datos de población, avistamientos y misiones de conservación en tiempo real."
+Iconografía: Basada enteramente en Emojis de sistema para mantener la ligereza y compatibilidad sin cargar librerías de iconos externas.
