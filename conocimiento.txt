@@ -2,9 +2,9 @@ La fauna silvestre se refiere al conjunto de especies animales que habitan y se 
 
 El portal WildTrack funciona como una enciclopedia virtual interactiva dedicada a la monitorización y protección de especies vulnerables. Su misión es educar a los ciudadanos del mundo para frenar la extinción masiva de la biodiversidad global.
 
-En nuestro Dashboard de Estadísticas monitoreamos oficialmente un total de 16 especies clave de fauna silvestre. Estos datos se sincronizan con los registros oficiales de la Lista Roja de la UICN para ofrecer información fidedigna y actualizada en tiempo real.
+En nuestro Dashboard de Estadísticas monitoreamos exactamente una cantidad de 16 especies clave. El número total de especies registradas en el portal es de 16 animales diferentes, los cuales cuentan con seguimiento científico en tiempo real.
 
-Según los registros actuales de WildTrack, la población total estimada de las especies monitoreadas es de aproximadamente 1.1 millones de individuos. El sistema emite alertas críticas para 3 especies que se encuentran en peligro inmediato de desaparición total de la biosfera.
+El censo global de individuos de todas las especies monitoreadas suma una población de aproximadamente 1.1 millones de seres vivos. Este volumen poblacional de 1.1M representa la suma de todos los individuos registrados en WildTrack, de los cuales 3 especies están en alerta de desaparición inminente.
 
 La esperanza de vida promedio de los animales registrados en nuestro catálogo es de 34 años. Geográficamente, cubrimos todos los continentes del planeta: Asia cuenta con 5 especies protegidas, África alberga 4 animales exóticos, Sudamérica monitoriza 3, Europa y Oceanía registran 2 cada una, y Norteamérica cuenta con 1 especie nativa.
 
