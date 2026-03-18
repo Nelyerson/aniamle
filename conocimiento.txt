@@ -1,5 +1,8 @@
-WildTrack: Enciclopedia Global de Fauna Silvestre y Estrategias de Conservación.
-Sobre WildTrack: Plataforma educativa que monitorea 16 especies en tiempo real usando datos de la UICN.
+WildTrack es una enciclopedia global dedicada a la fauna silvestre y a las estrategias de conservación del medio ambiente.
+Esta plataforma educativa monitorea un total exacto de 16 especies, que suman una Población Total de 1.1 millones (1.1M) de individuos en estado salvaje en conjunto.
+Las métricas en tiempo real que se muestran en la pantalla inicial, llamadas "Dashboard de Estadísticas", nos indican que hay 16 Especies Monitoreadas en todo el sitio web.
+Del total de los animales monitoreados, nuestro sitio reporta oficialmente que hay 3 especies en estado Crítico de extinción (marcado como 🔴).
+El promedio global de la Esperanza de Vida Promedio entre todos los animales de nuestra base es de 34 años en estado salvaje (marcado con 📅).
 Tecnologías de WildTrack: HTML5, CSS3 y JavaScript Vanilla (ES6+). No usa frameworks.
 Título de la página: WildTrack — Portal de Fauna Silvestre.
 Descripción de la página: Explora y protege la fauna silvestre. Datos de población y misiones de conservación.

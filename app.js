@@ -415,20 +415,13 @@ let ragReady = false;
 let chatOpen = false;
 let chatBotTyping = false;
 
-// --- TF-IDF ---
-const SYNONYMS = {
-  'pagina': 'wildtrack', 'sitio': 'wildtrack', 'web': 'wildtrack', 'aqui': 'wildtrack', 'esto': 'wildtrack',
-  'titulo': 'wildtrack', 'nombre': 'wildtrack', 'bot': 'wildbot', 'tu': 'wildbot'
-};
-
 function ragTokenize(text) {
   return text
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s]/g, ' ') // permitir números
+    .replace(/[^a-z0-9\s]/g, ' ') 
     .split(/\s+/)
-    .map(t => SYNONYMS[t] || t) // reemplazar por sinónimos si aplica
-    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t)); // restaurar stopwords
+    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t));
 }
 
 function ragBuildTF(tokens) {
@@ -495,27 +488,9 @@ async function initRAG() {
     console.error('[WildBot] ❌ Error cargando conocimiento.txt:', err);
   }
 
-  // SCRAPING DINÁMICO: "Sliding Window" para mantener Etiquetas + Valores juntos
-  console.log('[WildBot] 🌐 Extrayendo conocimiento dinámico de la página (DOM Sliding Window)...');
-  const pageText = document.body.innerText;
-  const rawPageLines = pageText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-  const domDocs = [];
-  for (let i = 0; i < rawPageLines.length - 1; i++) {
-    const combined = rawPageLines[i] + ': ' + rawPageLines[i + 1];
-    if (combined.length > 15) {
-      domDocs.push({
-        text: combined,
-        response: `Según la interfaz de la página web: ${combined}`,
-        source: 'dom'
-      });
-    }
-  }
-  docs = [...docs, ...domDocs];
-  console.log(`[WildBot] 🌐 ${domDocs.length} fragmentos extraídos dinámicamente de la web.`);
-
   if (docs.length === 0) {
     ragReady = false;
-    appendChatMsg('bot', '⚠️ No he podido cargar ninguna base de conocimiento ni extraer datos de la web.', true);
+    appendChatMsg('bot', '⚠️ No he podido cargar la base de conocimiento (`conocimiento.txt`). Verifica que estés usando un servidor local.', true);
     return;
   }
 
@@ -523,7 +498,7 @@ async function initRAG() {
   ragIdf = ragBuildIDF(rawDocs);
   ragDocs = rawDocs.map(d => ({ ...d, tfIdf: ragTFIDF(ragBuildTF(d.tokens), ragIdf) }));
   ragReady = true;
-  console.log(`[WildBot] ✅ RAG listo — ${ragDocs.length} vectores indexados (TXT + DOM)`);
+  console.log(`[WildBot] ✅ RAG puro inicializado con éxito. (${ragDocs.length} vectores indexados).`);
 }
 
 function ragQuery(query, threshold = CONFIG.ragThreshold) {
