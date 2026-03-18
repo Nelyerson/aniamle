@@ -416,13 +416,19 @@ let chatOpen = false;
 let chatBotTyping = false;
 
 // --- TF-IDF ---
+const SYNONYMS = {
+  'pagina': 'wildtrack', 'sitio': 'wildtrack', 'web': 'wildtrack', 'aqui': 'wildtrack', 'esto': 'wildtrack',
+  'titulo': 'wildtrack', 'nombre': 'wildtrack', 'bot': 'wildbot', 'tu': 'wildbot'
+};
+
 function ragTokenize(text) {
   return text
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9\s]/g, ' ') // permitir números
     .split(/\s+/)
-    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t)); // restaurar stopwords esencial para RAG
+    .map(t => SYNONYMS[t] || t) // reemplazar por sinónimos si aplica
+    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t)); // restaurar stopwords
 }
 
 function ragBuildTF(tokens) {
