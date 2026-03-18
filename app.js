@@ -566,20 +566,7 @@ function ragQuery(query, threshold = 0.04) {
 
   if (bestMatches.length === 0) return null;
 
-  // Si es solo 1 resultado
-  if (bestMatches.length === 1) {
-    return bestMatches[0].text;
-  }
-
-  // Si hay más de 1 dato relevante, simplemente los unimos limpiamente
-  const f1 = bestMatches[0].text;
-  const f2 = bestMatches[1].text;
-  
-  if (f1.includes(f2) || f2.includes(f1)) {
-     return f1;
-  }
-  
-  return f1 + " " + f2;
+  return bestMatches[0].text;
 }
 
 // --- Renderizar markdown básico a HTML ---
