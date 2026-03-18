@@ -486,7 +486,7 @@ async function initRAG() {
     if (res.ok) {
       const txt = await res.text();
       const fragments = parseTxtToFragments(txt);
-      docs = fragments.map(f => ({ text: f, response: f })); // RAG puro: texto -> respuesta
+      docs = fragments.map(f => ({ text: f, response: f, source: 'txt' })); 
       console.log(`[WildBot] ✅ conocimiento.txt cargado — ${docs.length} fragmentos`);
     } else {
       console.error('[WildBot] ❌ No se encontró conocimiento.txt');
@@ -495,14 +495,21 @@ async function initRAG() {
     console.error('[WildBot] ❌ Error cargando conocimiento.txt:', err);
   }
 
+  // SCRAPING DINÁMICO DEL DOM (Exigencia del usuario: "que se llene de conocimiento con la web")
+  console.log('[WildBot] 🌐 Extrayendo conocimiento dinámico de la página web (DOM Scraping)...');
+  const pageText = document.body.innerText;
+  const pageFragments = parseTxtToFragments(pageText).filter(f => f.length > 15); // Filtramos muy cortos para evitar ruido UI
+  const domDocs = pageFragments.map(f => ({ 
+    text: f, 
+    response: `Según la información actual en la página web: ${f}`,
+    source: 'dom' 
+  }));
+  docs = [...docs, ...domDocs];
+  console.log(`[WildBot] 🌐 ${domDocs.length} fragmentos extraídos dinámicamente de la web.`);
+
   if (docs.length === 0) {
     ragReady = false;
-    const isLocal = window.location.protocol === 'file:';
-    let errorMsg = '⚠️ No he podido cargar mi base de conocimientos (`conocimiento.txt`).';
-    if (isLocal) {
-      errorMsg += '<br><br><strong>Tip:</strong> Parece que estás abriendo el archivo directamente. Para que el Chatbot funcione, necesitas usar un servidor local (ej: Live Server en VS Code o "npx serve .").';
-    }
-    appendChatMsg('bot', errorMsg, true);
+    appendChatMsg('bot', '⚠️ No he podido cargar ninguna base de conocimiento ni extraer datos de la web.', true);
     return;
   }
 
@@ -510,7 +517,7 @@ async function initRAG() {
   ragIdf = ragBuildIDF(rawDocs);
   ragDocs = rawDocs.map(d => ({ ...d, tfIdf: ragTFIDF(ragBuildTF(d.tokens), ragIdf) }));
   ragReady = true;
-  console.log(`[WildBot] ✅ RAG listo — ${ragDocs.length} vectores indexados`);
+  console.log(`[WildBot] ✅ RAG listo — ${ragDocs.length} vectores indexados (TXT + DOM)`);
 }
 
 function ragQuery(query, threshold = CONFIG.ragThreshold) {
