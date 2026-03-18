@@ -550,7 +550,7 @@ async function initRAG() {
   console.log(`[WildBot] ✅ RAG puro inicializado con éxito. (${ragDocs.length} vectores indexados).`);
 }
 
-function ragQuery(query, threshold = 0.04) {
+function ragQuery(query, threshold = 0.02) {
   if (!ragReady) return null;
   const tokens = ragTokenize(query);
   if (tokens.length === 0) return null;
