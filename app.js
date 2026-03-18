@@ -354,7 +354,8 @@ function renderAchievements() {
     clone.querySelector('.achievement-icon').textContent = a.icon;
     clone.querySelector('.achievement-name').textContent = a.name;
     clone.querySelector('.achievement-desc').textContent = a.desc;
-    clone.querySelector('.achievement-badge').textContent = a.unlocked ? '✓ DESBLOQUEADO' : '🔒';
+    const dict = $('ui-dictionary');
+    clone.querySelector('.achievement-badge').textContent = a.unlocked ? (dict ? dict.dataset.badgeUnlocked : '✓') : (dict ? dict.dataset.badgeLocked : '🔒');
     list.appendChild(clone);
   });
 }
@@ -631,7 +632,8 @@ function appendChatMsg(role, text, raw = false) {
   
   const avatar = clone.querySelector('.cmsg-avatar');
   avatar.classList.add(isUser ? 'user-av' : 'bot-av');
-  avatar.textContent = isUser ? 'Tú' : '🌿';
+  const dict = $('ui-dictionary');
+  avatar.textContent = isUser ? (dict ? dict.dataset.chatYou : 'Tú') : (dict ? dict.dataset.chatBot : '🌿');
   
   clone.querySelector('.cmsg-bubble').innerHTML = html;
   
