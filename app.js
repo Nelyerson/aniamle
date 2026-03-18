@@ -508,7 +508,6 @@ function ragQuery(query, threshold = CONFIG.ragThreshold) {
 
   const qVec = ragTFIDF(ragBuildTF(tokens), ragIdf);
   
-  // Obtener fragmentos que superen el umbral, máximo 2 para simular RAG multipárrafo generativo
   const bestMatches = ragDocs
     .map((d, i) => ({ score: ragCosineSim(qVec, d.tfIdf), text: d.response, source: d.source }))
     .filter(m => m.score >= threshold)
@@ -516,38 +515,20 @@ function ragQuery(query, threshold = CONFIG.ragThreshold) {
 
   if (bestMatches.length === 0) return null;
 
-  // Fase G: Simulación de Generación de Lenguaje Natural
-  const isGreeting = ['hola', 'bienvenido', 'buenas'].includes(tokens[0]);
-  
-  if (isGreeting) {
-    return bestMatches[0].text; // Saludo directo
+  // Si es solo 1 resultado
+  if (bestMatches.length === 1) {
+    return bestMatches[0].text;
   }
 
-  // Tomamos hasta 2 datos más relevantes
-  const facts = bestMatches.slice(0, 2).map(m => m.text);
+  // Si hay más de 1 dato relevante, simplemente los unimos limpiamente
+  const f1 = bestMatches[0].text;
+  const f2 = bestMatches[1].text;
   
-  // Random generators para mayor fluidez
-  const intro = [
-    "Revisando los datos, encuentro que ",
-    "Basado en nuestra base de conservación, ",
-    "Interesante pregunta. Según mis registros, ",
-    "Aquí tienes la información: "
-  ][Math.floor(Math.random() * 4)];
-
-  const linker = [
-    ". Además, ",
-    ". También cabe destacar que ",
-    ". Por otro lado, "
-  ][Math.floor(Math.random() * 3)];
-
-  if (facts.length === 1) {
-    return intro + facts[0];
-  } else {
-    if (facts[1].includes(facts[0]) || facts[0].includes(facts[1])) {
-       return intro + facts[0];
-    }
-    return intro + facts[0] + linker + facts[1].toLowerCase();
+  if (f1.includes(f2) || f2.includes(f1)) {
+     return f1;
   }
+  
+  return f1 + " " + f2;
 }
 
 // --- Renderizar markdown básico a HTML ---
