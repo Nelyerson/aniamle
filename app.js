@@ -420,9 +420,9 @@ function ragTokenize(text) {
   return text
     .toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z\s]/g, ' ')
+    .replace(/[^a-z0-9\s]/g, ' ') // permitir números
     .split(/\s+/)
-    .filter(t => t.length > 2 && !STOPWORDS_ES.has(t));
+    .filter(t => t.length >= 2); // permitir palabras de 2 letras (ej: "no", "si", "yo")
 }
 
 function ragBuildTF(tokens) {
@@ -461,9 +461,9 @@ function ragCosineSim(a, b) {
 // --- Parsear conocimiento.txt en fragmentos ---
 function parseTxtToFragments(text) {
   return text
-    .split(/\r?\n\r?\n+/)          // separar por líneas en blanco
+    .split(/\r?\n/)           // dividir por CADA línea individual
     .map(p => p.trim())
-    .filter(p => p.length > 10);  // permitir fragmentos más cortos para saludos/interacciones
+    .filter(p => p.length > 3); // permitir fragmentos muy cortos (ej: "Hola!")
 }
 
 // --- Enriquecer fragmentos con datos vivos de ANIMALS ---
