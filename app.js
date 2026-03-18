@@ -422,7 +422,7 @@ function ragTokenize(text) {
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9\s]/g, ' ') // permitir números
     .split(/\s+/)
-    .filter(t => t.length >= 2); // permitir palabras de 2 letras (ej: "no", "si", "yo")
+    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t)); // restaurar stopwords esencial para RAG
 }
 
 function ragBuildTF(tokens) {
