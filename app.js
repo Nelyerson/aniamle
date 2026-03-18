@@ -486,7 +486,7 @@ async function initRAG() {
     if (res.ok) {
       const txt = await res.text();
       const fragments = parseTxtToFragments(txt);
-      docs = fragments.map(f => ({ text: f, response: f, source: 'txt' })); 
+      docs = fragments.map(f => ({ text: f, response: f, source: 'txt' }));
       console.log(`[WildBot] ✅ conocimiento.txt cargado — ${docs.length} fragmentos`);
     } else {
       console.error('[WildBot] ❌ No se encontró conocimiento.txt');
@@ -499,10 +499,10 @@ async function initRAG() {
   console.log('[WildBot] 🌐 Extrayendo conocimiento dinámico de la página web (DOM Scraping)...');
   const pageText = document.body.innerText;
   const pageFragments = parseTxtToFragments(pageText).filter(f => f.length > 15); // Filtramos muy cortos para evitar ruido UI
-  const domDocs = pageFragments.map(f => ({ 
-    text: f, 
+  const domDocs = pageFragments.map(f => ({
+    text: f,
     response: `Según la información actual en la página web: ${f}`,
-    source: 'dom' 
+    source: 'dom'
   }));
   docs = [...docs, ...domDocs];
   console.log(`[WildBot] 🌐 ${domDocs.length} fragmentos extraídos dinámicamente de la web.`);
