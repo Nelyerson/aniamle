@@ -495,15 +495,21 @@ async function initRAG() {
     console.error('[WildBot] ❌ Error cargando conocimiento.txt:', err);
   }
 
-  // SCRAPING DINÁMICO DEL DOM (Exigencia del usuario: "que se llene de conocimiento con la web")
-  console.log('[WildBot] 🌐 Extrayendo conocimiento dinámico de la página web (DOM Scraping)...');
+  // SCRAPING DINÁMICO: "Sliding Window" para mantener Etiquetas + Valores juntos
+  console.log('[WildBot] 🌐 Extrayendo conocimiento dinámico de la página (DOM Sliding Window)...');
   const pageText = document.body.innerText;
-  const pageFragments = parseTxtToFragments(pageText).filter(f => f.length > 15); // Filtramos muy cortos para evitar ruido UI
-  const domDocs = pageFragments.map(f => ({
-    text: f,
-    response: `Según la información actual en la página web: ${f}`,
-    source: 'dom'
-  }));
+  const rawPageLines = pageText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  const domDocs = [];
+  for (let i = 0; i < rawPageLines.length - 1; i++) {
+    const combined = rawPageLines[i] + ': ' + rawPageLines[i + 1];
+    if (combined.length > 15) {
+      domDocs.push({
+        text: combined,
+        response: `Según la interfaz de la página web: ${combined}`,
+        source: 'dom'
+      });
+    }
+  }
   docs = [...docs, ...domDocs];
   console.log(`[WildBot] 🌐 ${domDocs.length} fragmentos extraídos dinámicamente de la web.`);
 
@@ -522,11 +528,51 @@ async function initRAG() {
 
 function ragQuery(query, threshold = CONFIG.ragThreshold) {
   if (!ragReady) return null;
-  const qVec = ragTFIDF(ragBuildTF(ragTokenize(query)), ragIdf);
-  const best = ragDocs
-    .map((d, i) => ({ score: ragCosineSim(qVec, d.tfIdf), i }))
-    .sort((a, b) => b.score - a.score)[0];
-  return (best && best.score >= threshold) ? ragDocs[best.i].response : null;
+  const tokens = ragTokenize(query);
+  if (tokens.length === 0) return null;
+
+  const qVec = ragTFIDF(ragBuildTF(tokens), ragIdf);
+  
+  // Obtener fragmentos que superen el umbral, máximo 2 para simular RAG multipárrafo generativo
+  const bestMatches = ragDocs
+    .map((d, i) => ({ score: ragCosineSim(qVec, d.tfIdf), text: d.response, source: d.source }))
+    .filter(m => m.score >= threshold)
+    .sort((a, b) => b.score - a.score);
+
+  if (bestMatches.length === 0) return null;
+
+  // Fase G: Simulación de Generación de Lenguaje Natural
+  const isGreeting = ['hola', 'bienvenido', 'buenas'].includes(tokens[0]);
+  
+  if (isGreeting) {
+    return bestMatches[0].text; // Saludo directo
+  }
+
+  // Tomamos hasta 2 datos más relevantes
+  const facts = bestMatches.slice(0, 2).map(m => m.text);
+  
+  // Random generators para mayor fluidez
+  const intro = [
+    "Revisando los datos, encuentro que ",
+    "Basado en nuestra base de conservación, ",
+    "Interesante pregunta. Según mis registros, ",
+    "Aquí tienes la información: "
+  ][Math.floor(Math.random() * 4)];
+
+  const linker = [
+    ". Además, ",
+    ". También cabe destacar que ",
+    ". Por otro lado, "
+  ][Math.floor(Math.random() * 3)];
+
+  if (facts.length === 1) {
+    return intro + facts[0];
+  } else {
+    if (facts[1].includes(facts[0]) || facts[0].includes(facts[1])) {
+       return intro + facts[0];
+    }
+    return intro + facts[0] + linker + facts[1].toLowerCase();
+  }
 }
 
 // --- Renderizar markdown básico a HTML ---
