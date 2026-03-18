@@ -509,10 +509,19 @@ function ragCosineSim(a, b) {
 
 // --- Parsear conocimiento.txt en fragmentos ---
 function parseTxtToFragments(text) {
-  return text
-    .split(/\r?\n/)
-    .map(p => p.trim())
-    .filter(p => p.length > 5); // Excluir líneas vacías o demasiado cortas
+  const fragments = [];
+  const blocks = text.split(/(?:\r?\n){2,}/); // Separa por bloques (uno o más saltos de línea vacíos)
+  for (let b of blocks) {
+    if (b.includes('|||')) {
+      // Formato Q&A: "Keywords ||| Respuesta"
+      const parts = b.split('|||');
+      fragments.push({ text: parts[0].trim(), response: parts[1].trim(), source: 'txt' });
+    } else if (b.trim().length > 5) {
+      // Fallback para párrafos normales
+      fragments.push({ text: b.trim(), response: b.trim(), source: 'txt' });
+    }
+  }
+  return fragments;
 }
 
 // --- Enriquecer fragmentos con datos vivos de ANIMALS ---
@@ -543,7 +552,7 @@ async function initRAG() {
     return;
   }
 
-  const rawDocs = docs.map(d => ({ ...d, tokens: ragTokenize(d.text + ' ' + d.response) }));
+  const rawDocs = docs.map(d => ({ ...d, tokens: ragTokenize(d.text) }));
   ragIdf = ragBuildIDF(rawDocs);
   ragDocs = rawDocs.map(d => ({ ...d, tfIdf: ragTFIDF(ragBuildTF(d.tokens), ragIdf) }));
   ragReady = true;
