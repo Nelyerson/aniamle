@@ -535,8 +535,7 @@ async function initRAG() {
     const res = await fetch('conocimiento.txt');
     if (res.ok) {
       const txt = await res.text();
-      const fragments = parseTxtToFragments(txt);
-      docs = fragments.map(f => ({ text: f, response: f, source: 'txt' }));
+      docs = parseTxtToFragments(txt);
       console.log(`[WildBot] ✅ conocimiento.txt cargado — ${docs.length} fragmentos`);
     } else {
       console.error('[WildBot] ❌ No se encontró conocimiento.txt');
