@@ -532,7 +532,7 @@ async function initRAG() {
   let docs = [];
 
   try {
-    const res = await fetch('conocimiento.txt');
+    const res = await fetch('conocimiento.txt?v=' + Date.now());
     if (res.ok) {
       const txt = await res.text();
       docs = parseTxtToFragments(txt);
