@@ -18,19 +18,22 @@ function formatNumber(n) {
 
 function renderStatsCards() {
   const grid = $('statsGrid');
-  grid.innerHTML = STATS_CARDS.map(c => `
-    <div class="stat-card" style="--card-accent:${c.accent};--icon-bg:${c.iconBg};--fill-color:${c.fill}">
-      <div class="stat-card-header">
-        <div class="stat-icon">${c.icon}</div>
-        <span class="stat-badge ${c.badgeClass}">${c.badge}</span>
-      </div>
-      <div class="stat-value">${c.value}</div>
-      <div class="stat-label">${c.label}</div>
-      <div class="stat-progress-track">
-        <div class="stat-progress-fill" data-target="${c.progress}"></div>
-      </div>
-    </div>
-  `).join('');
+  grid.innerHTML = '';
+  const tmpl = $('tmpl-stat-card');
+  STATS_CARDS.forEach(c => {
+    const clone = tmpl.content.cloneNode(true);
+    const card = clone.querySelector('.stat-card');
+    card.style.setProperty('--card-accent', c.accent);
+    card.style.setProperty('--icon-bg', c.iconBg);
+    card.style.setProperty('--fill-color', c.fill);
+    clone.querySelector('.stat-icon').textContent = c.icon;
+    clone.querySelector('.stat-badge').textContent = c.badge;
+    clone.querySelector('.stat-badge').className = `stat-badge ${c.badgeClass}`;
+    clone.querySelector('.stat-value').textContent = c.value;
+    clone.querySelector('.stat-label').textContent = c.label;
+    clone.querySelector('.stat-progress-fill').dataset.target = c.progress;
+    grid.appendChild(clone);
+  });
   requestAnimationFrame(() => {
     setTimeout(() => {
       document.querySelectorAll('.stat-progress-fill').forEach(bar => {
@@ -45,7 +48,7 @@ function renderStatsCards() {
 // ============================================================
 
 function renderDonutChart() {
-  const risks = CONFIG.risks;
+  const risks = ['critico', 'peligro', 'vulnerable', 'menor'];
   const counts = risks.map(r => ANIMALS.filter(a => a.risk === r).length);
   const total = counts.reduce((a, b) => a + b, 0);
   const r = 72, cx = 100, cy = 100;
@@ -89,17 +92,21 @@ function renderDonutChart() {
   subText.setAttribute('x', cx); subText.setAttribute('y', cy + 14);
   subText.setAttribute('text-anchor', 'middle'); subText.setAttribute('font-size', '10');
   subText.setAttribute('fill', '#6b7280'); subText.setAttribute('font-family', 'Inter, sans-serif');
-  subText.textContent = 'ESPECIES';
+  const dict = $('ui-dictionary');
+  subText.textContent = dict ? dict.dataset.donutSpecies : 'ESPECIES';
   svg.appendChild(subText);
   const legend = $('donutLegend');
-  legend.innerHTML = risks.map((r, i) => {
+  legend.innerHTML = '';
+  const legTmpl = $('tmpl-donut-legend');
+  risks.forEach((r, i) => {
     const pct = Math.round(counts[i] / total * 100);
-    return `<div class="legend-item">
-      <div class="legend-dot-colored" style="background:${colors[i]}"></div>
-      <span class="legend-name">${RISK_LABELS[r]}</span>
-      <span class="legend-pct" style="color:${colors[i]}">${pct}%</span>
-    </div>`;
-  }).join('');
+    const clone = legTmpl.content.cloneNode(true);
+    clone.querySelector('.legend-dot-colored').style.background = colors[i];
+    clone.querySelector('.legend-name').textContent = RISK_LABELS[r];
+    clone.querySelector('.legend-pct').style.color = colors[i];
+    clone.querySelector('.legend-pct').textContent = `${pct}%`;
+    legend.appendChild(clone);
+  });
 }
 
 // ============================================================
@@ -108,15 +115,20 @@ function renderDonutChart() {
 
 function renderBarChart() {
   const container = $('barChart');
-  container.innerHTML = TREND_DATA.map(d => `
-    <div class="bar-row">
-      <span class="bar-label">${d.label}</span>
-      <div class="bar-track">
-        <div class="bar-fill" data-target="${d.value}" style="background:${d.color};width:0%"></div>
-      </div>
-      <span class="bar-value" style="color:${d.color}">${d.value}%</span>
-    </div>
-  `).join('');
+  container.innerHTML = '';
+  const tmpl = $('tmpl-bar-row');
+  TREND_DATA.forEach(d => {
+    const clone = tmpl.content.cloneNode(true);
+    clone.querySelector('.bar-label').textContent = d.label;
+    const fill = clone.querySelector('.bar-fill');
+    fill.dataset.target = d.value;
+    fill.style.background = d.color;
+    fill.style.width = '0%';
+    const val = clone.querySelector('.bar-value');
+    val.textContent = `${d.value}%`;
+    val.style.color = d.color;
+    container.appendChild(clone);
+  });
   requestAnimationFrame(() => {
     setTimeout(() => {
       container.querySelectorAll('.bar-fill').forEach(b => { b.style.width = b.dataset.target + '%'; });
@@ -130,13 +142,15 @@ function renderBarChart() {
 
 function renderContinentStats() {
   const container = $('continentStats');
-  container.innerHTML = CONTINENT_DATA.map(d => `
-    <div class="cont-row">
-      <span class="cont-name">${d.name}</span>
-      <div class="cont-track"><div class="cont-fill" data-target="${d.pct}"></div></div>
-      <span class="cont-count">${d.count}</span>
-    </div>
-  `).join('');
+  container.innerHTML = '';
+  const tmpl = $('tmpl-cont-row');
+  CONTINENT_DATA.forEach(d => {
+    const clone = tmpl.content.cloneNode(true);
+    clone.querySelector('.cont-name').textContent = d.name;
+    clone.querySelector('.cont-fill').dataset.target = d.pct;
+    clone.querySelector('.cont-count').textContent = d.count;
+    container.appendChild(clone);
+  });
   requestAnimationFrame(() => {
     setTimeout(() => {
       container.querySelectorAll('.cont-fill').forEach(b => { b.style.width = b.dataset.target + '%'; });
@@ -179,20 +193,18 @@ function hideMapTooltip() { $('mapTooltip').style.display = 'none'; }
 
 function showMapInfo(animal) {
   const panel = $('mapInfoPanel');
-  const riskColor = RISK_COLORS[animal.risk];
-  panel.innerHTML = `
-    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-      <span style="font-size:2rem">${animal.emoji}</span>
-      <div>
-        <div style="font-weight:700;font-size:0.95rem">${animal.name} <small style="font-style:italic;color:#6b7280">— ${animal.latin}</small></div>
-        <div style="font-size:0.8rem;margin-top:0.3rem;display:flex;gap:1rem;flex-wrap:wrap">
-          <span style="color:${riskColor}">● ${RISK_LABELS[animal.risk]}</span>
-          <span style="color:#a7f3d0">${UI_TEXT.labels.population}: ~${formatNumber(animal.population)}</span>
-          <span style="color:#a7f3d0">${UI_TEXT.labels.lifespan}: ${animal.lifespan} años</span>
-          <span style="color:#a7f3d0">${UI_TEXT.labels.habitat}: ${animal.habitat}</span>
-        </div>
-      </div>
-    </div>`;
+  panel.innerHTML = '';
+  const tmpl = $('tmpl-map-info');
+  const clone = tmpl.content.cloneNode(true);
+  clone.querySelector('.mi-emoji').textContent = animal.emoji;
+  clone.querySelector('.mi-title').innerHTML = `${animal.name} <small style="font-style:italic;color:#6b7280">— ${animal.latin}</small>`;
+  const risk = clone.querySelector('.mi-risk');
+  risk.style.color = RISK_COLORS[animal.risk];
+  risk.textContent = `● ${RISK_LABELS[animal.risk]}`;
+  clone.querySelector('.mi-pop').textContent = formatNumber(animal.population);
+  clone.querySelector('.mi-life').textContent = animal.lifespan;
+  clone.querySelector('.mi-hab').textContent = animal.habitat;
+  panel.appendChild(clone);
 }
 
 window.filterMap = function (filter) {
@@ -213,9 +225,30 @@ window.filterMap = function (filter) {
 
 function renderFilterTags() {
   const continents = ['all', ...new Set(ANIMALS.map(a => a.continent))];
-  const risks = ['all', ...CONFIG.risks];
-  $('continentFilters').innerHTML = continents.map(c => `<button class="filter-tag ${c === 'all' ? 'active' : ''}" onclick="setContinentFilter('${c}')">${CONTINENT_LABELS[c] || c}</button>`).join('');
-  $('riskFilters').innerHTML = risks.map(r => `<button class="filter-tag ${r === 'all' ? 'risk-active' : ''}" onclick="setRiskFilter('${r}')">${RISK_UI_LABELS[r]}</button>`).join('');
+  const risks = ['all', 'critico', 'peligro', 'vulnerable', 'menor'];
+  const tmpl = $('tmpl-filter-tag');
+
+  const cCont = $('continentFilters');
+  cCont.innerHTML = '';
+  continents.forEach(c => {
+    const clone = tmpl.content.cloneNode(true);
+    const btn = clone.querySelector('button');
+    btn.textContent = CONTINENT_LABELS[c] || c;
+    if (c === 'all') btn.classList.add('active');
+    btn.onclick = () => setContinentFilter(c);
+    cCont.appendChild(clone);
+  });
+
+  const rCont = $('riskFilters');
+  rCont.innerHTML = '';
+  risks.forEach(r => {
+    const clone = tmpl.content.cloneNode(true);
+    const btn = clone.querySelector('button');
+    btn.textContent = RISK_UI_LABELS[r];
+    if (r === 'all') btn.classList.add('risk-active');
+    btn.onclick = () => setRiskFilter(r);
+    rCont.appendChild(clone);
+  });
 }
 
 window.setContinentFilter = function (continent) {
@@ -240,7 +273,9 @@ window.filterAnimals = function () {
     const matchSearch = a.name.toLowerCase().includes(query) || a.latin.toLowerCase().includes(query) || a.habitat.toLowerCase().includes(query);
     return matchContinent && matchRisk && matchSearch;
   });
-  $('speciesCount').textContent = UI_TEXT.speciesCount(filtered.length, ANIMALS.length);
+  const dict = $('ui-dictionary');
+  const fmt = dict ? dict.dataset.speciesShowing : 'Mostrando {0} de {1} especies';
+  $('speciesCount').textContent = fmt.replace('{0}', filtered.length).replace('{1}', ANIMALS.length);
   renderSpeciesCards(filtered);
 };
 
@@ -250,37 +285,40 @@ window.filterAnimals = function () {
 
 function renderSpeciesCards(list) {
   const grid = $('speciesGrid');
+  grid.innerHTML = '';
   if (list.length === 0) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">${UI_TEXT.noSpeciesFound}</div>`;
+    grid.appendChild($('tmpl-empty-species').content.cloneNode(true));
     return;
   }
-  grid.innerHTML = list.map((a, idx) => {
-    const trend = a.trend >= 0
-      ? `<span style="color:#34d399">↑ +${a.trend}%</span>`
-      : `<span style="color:#f87171">↓ ${a.trend}%</span>`;
-    return `
-      <div class="species-card" style="animation-delay:${idx * 0.05}s">
-        <div class="species-header">
-          <span class="species-emoji">${a.emoji}</span>
-          <div>
-            <div class="species-title">${a.name}</div>
-            <div class="species-latin">${a.latin}</div>
-          </div>
-        </div>
-        <div class="species-body">
-          <div class="species-tags">
-            <span class="tag tag-continent">${a.continent.replace('SudAmerica', 'S.América').replace('NorteAmerica', 'N.América')}</span>
-            <span class="tag tag-${a.risk}">${RISK_LABELS[a.risk]}</span>
-          </div>
-          <div class="species-stats">
-            <div class="sp-stat"><span class="sp-stat-label">${UI_TEXT.labels.population}</span><span class="sp-stat-value">~${formatNumber(a.population)}</span></div>
-            <div class="sp-stat"><span class="sp-stat-label">${UI_TEXT.labels.lifespan}</span><span class="sp-stat-value">${a.lifespan} años</span></div>
-            <div class="sp-stat"><span class="sp-stat-label">${UI_TEXT.labels.habitat}</span><span class="sp-stat-value">${a.habitat}</span></div>
-            <div class="sp-stat"><span class="sp-stat-label">${UI_TEXT.labels.trend}</span><span class="sp-stat-value">${trend}</span></div>
-          </div>
-        </div>
-      </div>`;
-  }).join('');
+  const tmpl = $('tmpl-species-card');
+  list.forEach((a, idx) => {
+    const clone = tmpl.content.cloneNode(true);
+    const card = clone.querySelector('.species-card');
+    card.style.animationDelay = `${idx * 0.05}s`;
+    
+    clone.querySelector('.species-emoji').textContent = a.emoji;
+    clone.querySelector('.species-title').textContent = a.name;
+    clone.querySelector('.species-latin').textContent = a.latin;
+    
+    clone.querySelector('.tag-continent').textContent = a.continent.replace('SudAmerica', 'S.América').replace('NorteAmerica', 'N.América');
+    const riskTag = clone.querySelector('.tag-risk');
+    riskTag.textContent = RISK_LABELS[a.risk];
+    riskTag.classList.add(`tag-${a.risk}`);
+    
+    clone.querySelector('.sp-pop').textContent = `~${formatNumber(a.population)}`;
+    clone.querySelector('.sp-life').textContent = `${a.lifespan} años`;
+    clone.querySelector('.sp-hab').textContent = a.habitat;
+    const trendEl = clone.querySelector('.sp-trend');
+    if (a.trend >= 0) {
+      trendEl.textContent = `↑ +${a.trend}%`;
+      trendEl.style.color = '#34d399';
+    } else {
+      trendEl.textContent = `↓ ${a.trend}%`;
+      trendEl.style.color = '#f87171';
+    }
+    
+    grid.appendChild(clone);
+  });
 }
 
 // ============================================================
@@ -288,27 +326,37 @@ function renderSpeciesCards(list) {
 // ============================================================
 
 function renderMissions() {
-  $('missionsList').innerHTML = MISSIONS.map(m => `
-    <div class="mission-item ${m.completed ? 'completed' : ''}" id="mission-${m.id}" onclick="toggleMission('${m.id}')">
-      <div class="mission-check"></div>
-      <div class="mission-text">
-        <span class="mission-title">${m.icon} ${m.title}</span>
-        <span class="mission-sub">${m.desc}</span>
-      </div>
-      <span class="mission-xp">+${m.xp} XP</span>
-    </div>`).join('');
+  const list = $('missionsList');
+  list.innerHTML = '';
+  const tmpl = $('tmpl-mission-item');
+  MISSIONS.forEach(m => {
+    const clone = tmpl.content.cloneNode(true);
+    const item = clone.querySelector('.mission-item');
+    item.id = `mission-${m.id}`;
+    if (m.completed) item.classList.add('completed');
+    item.onclick = () => toggleMission(m.id);
+    clone.querySelector('.mission-title').innerHTML = `${m.icon} ${m.title}`;
+    clone.querySelector('.mission-sub').textContent = m.desc;
+    clone.querySelector('.mission-xp').textContent = `+${m.xp} XP`;
+    list.appendChild(clone);
+  });
 }
 
 function renderAchievements() {
-  $('achievementsList').innerHTML = ACHIEVEMENTS.map(a => `
-    <div class="achievement-item ${a.unlocked ? 'unlocked' : 'locked'}" id="ach-${a.id}">
-      <span class="achievement-icon">${a.icon}</span>
-      <div>
-        <span class="achievement-name">${a.name}</span>
-        <span class="achievement-desc">${a.desc}</span>
-      </div>
-      <span class="achievement-badge">${a.unlocked ? '✓ DESBLOQUEADO' : '🔒'}</span>
-    </div>`).join('');
+  const list = $('achievementsList');
+  list.innerHTML = '';
+  const tmpl = $('tmpl-achievement-item');
+  ACHIEVEMENTS.forEach(a => {
+    const clone = tmpl.content.cloneNode(true);
+    const item = clone.querySelector('.achievement-item');
+    item.id = `ach-${a.id}`;
+    item.classList.add(a.unlocked ? 'unlocked' : 'locked');
+    clone.querySelector('.achievement-icon').textContent = a.icon;
+    clone.querySelector('.achievement-name').textContent = a.name;
+    clone.querySelector('.achievement-desc').textContent = a.desc;
+    clone.querySelector('.achievement-badge').textContent = a.unlocked ? '✓ DESBLOQUEADO' : '🔒';
+    list.appendChild(clone);
+  });
 }
 
 window.toggleMission = function (missionId) {
@@ -341,8 +389,9 @@ function updateXP() {
   $('xpNext').textContent = `/ ${lvl.max}`;
   $('xpBarFill').style.width = pct + '%';
   $('xpNav').textContent = userXP;
-  $('userRank').textContent = UI_TEXT.userRankLabel(lvl.rank, lvl.label);
-  $('userName').textContent = lvl.rank >= 3 ? UI_TEXT.highRankName : UI_TEXT.lowRankName;
+  const dict = $('ui-dictionary');
+  $('userRank').textContent = `${dict ? dict.dataset.lvlPrefix : 'Nivel '}${lvl.rank} — ${lvl.label}`;
+  $('userName').textContent = lvl.rank >= 3 ? (dict ? dict.dataset.lvlHigh : 'Gran Explorador') : (dict ? dict.dataset.lvlLow : 'Explorador');
 }
 
 // ============================================================
@@ -353,7 +402,7 @@ function initNavbar() {
   const navbar = $('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 20);
-    const sections = CONFIG.navSections;
+    const sections = ['dashboard', 'map', 'species', 'missions'];
     let current = '';
     sections.forEach(id => {
       const el = document.getElementById(id);
@@ -490,7 +539,8 @@ async function initRAG() {
 
   if (docs.length === 0) {
     ragReady = false;
-    appendChatMsg('bot', '⚠️ No he podido cargar la base de conocimiento (`conocimiento.txt`). Verifica que estés usando un servidor local.', true);
+    const dict = $('ui-dictionary');
+    appendChatMsg('bot', dict ? dict.dataset.botLoadErr : 'ERROR', true);
     return;
   }
 
@@ -501,7 +551,7 @@ async function initRAG() {
   console.log(`[WildBot] ✅ RAG puro inicializado con éxito. (${ragDocs.length} vectores indexados).`);
 }
 
-function ragQuery(query, threshold = CONFIG.ragThreshold) {
+function ragQuery(query, threshold = 0.04) {
   if (!ragReady) return null;
   const tokens = ragTokenize(query);
   if (tokens.length === 0) return null;
@@ -545,22 +595,11 @@ function renderMarkdown(text) {
 // ============================================================
 
 function initChatbot() {
-  const grid = $('chatEmojiGrid');
-  if (grid) {
-    grid.innerHTML = CHAT_EMOJIS.map(e =>
-      `<button class="cemoji-btn" onclick="insertChatEmoji('${e}')">${e}</button>`
-    ).join('');
-  }
   initRAG();
   setTimeout(() => {
-    appendChatMsg('bot', UI_TEXT.botGreeting);
+    const dict = $('ui-dictionary');
+    appendChatMsg('bot', dict ? dict.dataset.botGreeting : 'Conectado');
   }, 1200);
-  document.addEventListener('click', e => {
-    if (!e.target.closest('#chatEmojiPicker') && !e.target.closest('.chat-emoji-toggle')) {
-      const p = $('chatEmojiPicker');
-      if (p) p.classList.remove('open');
-    }
-  });
 }
 
 window.toggleChat = function () {
@@ -584,14 +623,23 @@ function appendChatMsg(role, text, raw = false) {
   const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
   const isUser = role === 'user';
   const html = raw ? text : renderMarkdown(text);
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <div class="cmsg ${isUser ? 'user' : 'bot'}">
-      <div class="cmsg-avatar ${isUser ? 'user-av' : 'bot-av'}">${isUser ? 'Tú' : '🌿'}</div>
-      <div class="cmsg-bubble">${html}</div>
-    </div>
-    <div class="cmsg-time ${isUser ? 'user-t' : ''}">${time}</div>`;
-  container.appendChild(div);
+  
+  const tmpl = $('tmpl-chat-msg');
+  const clone = tmpl.content.cloneNode(true);
+  const cmsg = clone.querySelector('.cmsg');
+  cmsg.classList.add(isUser ? 'user' : 'bot');
+  
+  const avatar = clone.querySelector('.cmsg-avatar');
+  avatar.classList.add(isUser ? 'user-av' : 'bot-av');
+  avatar.textContent = isUser ? 'Tú' : '🌿';
+  
+  clone.querySelector('.cmsg-bubble').innerHTML = html;
+  
+  const timeEl = clone.querySelector('.cmsg-time');
+  if (isUser) timeEl.classList.add('user-t');
+  timeEl.textContent = time;
+  
+  container.appendChild(clone.firstElementChild);
   container.scrollTop = container.scrollHeight;
 }
 
@@ -618,7 +666,8 @@ window.sendChatMessage = function () {
     if (response) {
       appendChatMsg('bot', response);
     } else {
-      appendChatMsg('bot', UI_TEXT.botError);
+      const dict = $('ui-dictionary');
+      appendChatMsg('bot', dict ? dict.dataset.botErr : 'No entiendo');
     }
     msgs.scrollTop = msgs.scrollHeight;
   }, 600 + Math.random() * 400);
@@ -637,20 +686,7 @@ window.clearChat = function () {
   const msgs = $('chatMessages');
   if (msgs) {
     msgs.innerHTML = '';
-    setTimeout(() => appendChatMsg('bot', UI_TEXT.botReset), 150);
+    const dict = $('ui-dictionary');
+    setTimeout(() => appendChatMsg('bot', dict ? dict.dataset.botReset : 'Limpio'), 150);
   }
-};
-
-window.toggleChatEmoji = function () {
-  const p = $('chatEmojiPicker');
-  if (p) p.classList.toggle('open');
-};
-
-window.insertChatEmoji = function (emoji) {
-  const inp = $('chatInput');
-  if (!inp) return;
-  const pos = inp.selectionStart || inp.value.length;
-  inp.value = inp.value.slice(0, pos) + emoji + inp.value.slice(pos);
-  inp.focus();
-  $('chatEmojiPicker').classList.remove('open');
 };

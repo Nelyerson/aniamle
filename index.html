@@ -358,31 +358,108 @@
     let activeContinentFilter = 'all';
     let activeRiskFilter = 'all';
     let mapFilter = 'all';
-    // Configuraciones y Textos de UI
-    const UI_TEXT = {
-      botGreeting: 'WildBot activo. ¿Qué deseas consultar hoy?',
-      botError: '🌿 No encontré información sobre eso. Intenta reformular tu pregunta.',
-      botReset: '🌿 Chat reiniciado. ¿En qué puedo ayudarte?',
-      noSpeciesFound: '🔍 No se encontraron especies con estos filtros.',
-      speciesCount: (f, t) => `Mostrando ${f} de ${t} especies`,
-      userRankLabel: (r, l) => `Nivel ${r} — ${l}`,
-      highRankName: 'Gran Explorador',
-      lowRankName: 'Explorador',
-      labels: {
-        population: '👥 Población',
-        lifespan: '📅 Esperanza vida',
-        habitat: '🌿 Hábitat',
-        trend: '📈 Tendencia',
-        mapInfoHint: '👆 Haz clic en un marcador para ver detalles'
-      }
-    };
-    
-    const CONFIG = {
-      ragThreshold: 0.04,
-      risks: ['critico', 'peligro', 'vulnerable', 'menor'],
-      navSections: ['dashboard', 'map', 'species', 'missions']
-    };
   </script>
+  <!-- ===== CONFIGURACIÓN Y TEXTOS PREDEFINIDOS PARA JS ===== -->
+  <div id="ui-dictionary" style="display:none;"
+    data-bot-greeting="WildBot activo. ¿Qué deseas consultar hoy?"
+    data-bot-err="🌿 No encontré información sobre eso. Intenta reformular tu pregunta."
+    data-bot-reset="🌿 Chat reiniciado. ¿En qué puedo ayudarte?"
+    data-bot-load-err="⚠️ No he podido cargar la base de conocimiento (`conocimiento.txt`). Verifica que estés usando un servidor local."
+    data-lvl-high="Gran Explorador"
+    data-lvl-low="Explorador"
+    data-lvl-prefix="Nivel "
+    data-species-showing="Mostrando {0} de {1} especies"
+    data-donut-species="ESPECIES"
+  ></div>
+
+  <!-- ===== TEMPLATES UI DE DISEÑO ===== -->
+  <template id="tmpl-empty-species">
+    <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">🔍 No se encontraron especies con estos filtros.</div>
+  </template>
+
+  <template id="tmpl-stat-card">
+    <div class="stat-card">
+      <div class="stat-card-header"><div class="stat-icon"></div><span class="stat-badge"></span></div>
+      <div class="stat-value"></div><div class="stat-label"></div>
+      <div class="stat-progress-track"><div class="stat-progress-fill"></div></div>
+    </div>
+  </template>
+
+  <template id="tmpl-donut-legend">
+    <div class="legend-item">
+      <div class="legend-dot-colored"></div><span class="legend-name"></span><span class="legend-pct"></span>
+    </div>
+  </template>
+
+  <template id="tmpl-bar-row">
+    <div class="bar-row">
+      <span class="bar-label"></span><div class="bar-track"><div class="bar-fill"></div></div><span class="bar-value"></span>
+    </div>
+  </template>
+
+  <template id="tmpl-cont-row">
+    <div class="cont-row">
+      <span class="cont-name"></span><div class="cont-track"><div class="cont-fill"></div></div><span class="cont-count"></span>
+    </div>
+  </template>
+
+  <template id="tmpl-map-info">
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+      <span class="mi-emoji" style="font-size:2rem"></span>
+      <div>
+        <div class="mi-title" style="font-weight:700;font-size:0.95rem"></div>
+        <div style="font-size:0.8rem;margin-top:0.3rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <span class="mi-risk"></span>
+          <span class="mi-pop-container">👥 Población: ~<span class="mi-pop"></span></span>
+          <span class="mi-life-container">📅 Esperanza vida: <span class="mi-life"></span> años</span>
+          <span class="mi-hab-container">🌿 Hábitat: <span class="mi-hab"></span></span>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tmpl-filter-tag">
+    <button class="filter-tag"></button>
+  </template>
+
+  <template id="tmpl-species-card">
+    <div class="species-card">
+      <div class="species-header">
+        <span class="species-emoji"></span><div><div class="species-title"></div><div class="species-latin"></div></div>
+      </div>
+      <div class="species-body">
+        <div class="species-tags"><span class="tag tag-continent"></span><span class="tag tag-risk"></span></div>
+        <div class="species-stats">
+          <div class="sp-stat"><span class="sp-stat-label lbl-pop">👥 Población</span><span class="sp-stat-value sp-pop"></span></div>
+          <div class="sp-stat"><span class="sp-stat-label lbl-life">📅 Esperanza vida</span><span class="sp-stat-value sp-life"></span></div>
+          <div class="sp-stat"><span class="sp-stat-label lbl-hab">🌿 Hábitat</span><span class="sp-stat-value sp-hab"></span></div>
+          <div class="sp-stat"><span class="sp-stat-label lbl-trend">📈 Tendencia</span><span class="sp-stat-value sp-trend"></span></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tmpl-mission-item">
+    <div class="mission-item">
+      <div class="mission-check"></div><div class="mission-text"><span class="mission-title"></span><span class="mission-sub"></span></div><span class="mission-xp"></span>
+    </div>
+  </template>
+
+  <template id="tmpl-achievement-item">
+    <div class="achievement-item">
+      <span class="achievement-icon"></span><div><span class="achievement-name"></span><span class="achievement-desc"></span></div><span class="achievement-badge"></span>
+    </div>
+  </template>
+
+  <template id="tmpl-chat-msg">
+    <div>
+      <div class="cmsg">
+        <div class="cmsg-avatar"></div><div class="cmsg-bubble"></div>
+      </div>
+      <div class="cmsg-time"></div>
+    </div>
+  </template>
+
   <script src="app.js"></script>
 </body>
 </html>
