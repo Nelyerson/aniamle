@@ -510,14 +510,12 @@ function ragCosineSim(a, b) {
 // --- Parsear conocimiento.txt en fragmentos ---
 function parseTxtToFragments(text) {
   return text
-    .split(/\r?\n/)           // dividir por CADA línea individual
+    .split(/\r?\n/)
     .map(p => p.trim())
-    .filter(p => p.length > 3); // permitir fragmentos muy cortos (ej: "Hola!")
+    .filter(p => p.length > 5); // Excluir líneas vacías o demasiado cortas
 }
 
 // --- Enriquecer fragmentos con datos vivos de ANIMALS ---
-
-
 
 
 // --- Inicializar RAG ---
