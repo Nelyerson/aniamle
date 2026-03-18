@@ -463,7 +463,7 @@ function parseTxtToFragments(text) {
   return text
     .split(/\r?\n\r?\n+/)          // separar por líneas en blanco
     .map(p => p.trim())
-    .filter(p => p.length > 50);  // ignorar párrafos muy cortos
+    .filter(p => p.length > 10);  // permitir fragmentos más cortos para saludos/interacciones
 }
 
 // --- Enriquecer fragmentos con datos vivos de ANIMALS ---

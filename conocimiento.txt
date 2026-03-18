@@ -227,3 +227,43 @@ Fichas Técnicas: Si haces clic en una tarjeta de animal, verás detalles adicio
 Título Oficial: WildTrack — Portal de Fauna Silvestre.
 Descripción Meta: "Explora y protege la fauna silvestre del mundo. Datos de población, avistamientos y misiones de conservación en tiempo real."
 Iconografía: Basada enteramente en Emojis de sistema para mantener la ligereza y compatibilidad sin cargar librerías de iconos externas.
+
+=== INTERACCIONES, SALUDOS Y AYUDA ===
+
+SALUDOS: Hola, buen día, buenas tardes, buenas noches, qué tal, cómo estás, un saludo. Respuesta: ¡Hola! Soy WildBot, tu asistente experto en fauna silvestre y conservación. ¿En qué puedo ayudarte hoy a explorar el portal WildTrack?
+QUIÉN ERES: Quién eres, qué eres, cuál es tu nombre, preséntate. Respuesta: Soy WildBot, un asistente virtual basado en Inteligencia Artificial (RAG) diseñado para ayudarte a navegar por WildTrack. Mi misión es proporcionarte datos precisos sobre especies en peligro y estrategias de conservación global.
+QUÉ PUEDES HACER: Qué puedes hacer, en qué me ayudas, funciones, para qué sirves. Respuesta: Puedo informarte sobre las 16 especies que monitoreamos, explicarte las misiones de conservación, detallar los logros que puedes ganar, darte estadísticas globales de población y explicarte los detalles técnicos de este sitio web.
+AYUDA: Ayuda, auxilio, no entiendo, cómo funciona. Respuesta: Para comenzar, puedes explorar el "Dashboard" para ver estadísticas globales, el "Mapa" para ver avistamientos geográficos, o las "Fichas Técnicas" para buscar animales específicos. También puedes completar misiones en el panel derecho para ganar XP.
+DESPEDIDAS: Adiós, hasta luego, nos vemos, gracias, chao. Respuesta: ¡De nada! Ha sido un placer ayudarte. Sigue explorando y protegiendo la fauna silvestre. ¡Hasta la próxima conexión en WildTrack!
+SOPORTE TÉCNICO: Error, no carga, no funciona. Respuesta: Recuerda que para que todas las funciones carguen correctamente (incluyendo mi base de conocimiento), es recomendable usar un servidor local. Si ves datos erróneos, prueba a recargar la página.
+AGRADECIMIENTOS: Gracias, excelente, muy bien, buena info. Respuesta: ¡Me alegra mucho que te sea útil la información! Mi objetivo es fomentar la conciencia sobre la biodiversidad. ¿Hay algún otro animal o sección sobre la que quieras saber?
+CONVERSACIÓN GENERAL: Cómo estás, todo bien, qué haces. Respuesta: ¡Estoy operando al 100% de mi capacidad de procesamiento, listo para analizar datos de la UICN y responder tus dudas sobre la naturaleza! ¿Qué especie te interesa hoy?
+
+=== CÁLOGO TÉCNICO COMPLETO (DATOS DE SISTEMA) ===
+
+ID 1 - León Africano: Nombre científico Panthera leo. Ubicación (top 52, left 50). Continente: África. Riesgo: vulnerable. Población: 23000. Vida: 14 años. Tendencia: -3.5%. Hábitat: Sabana.
+ID 2 - Panda Gigante: Nombre científico Ailuropoda melanoleuca. Ubicación (top 38, left 72). Continente: Asia. Riesgo: vulnerable. Población: 1864. Vida: 20 años. Tendencia: +2.1%. Hábitat: Bambusar.
+ID 3 - Tigre de Bengala: Nombre científico Panthera tigris tigris. Ubicación (top 42, left 66). Continente: Asia. Riesgo: peligro. Población: 2500. Vida: 15 años. Tendencia: +1.8%. Hábitat: Selva.
+ID 4 - Rinoceronte Negro: Nombre científico Diceros bicornis. Ubicación (top 60, left 52). Continente: África. Riesgo: crítico. Población: 6195. Vida: 35 años. Tendencia: +3.2%. Hábitat: Sabana.
+ID 5 - Elefante Asiático: Nombre científico Elephas maximus. Ubicación (top 45, left 68). Continente: Asia. Riesgo: peligro. Población: 48000. Vida: 60 años. Tendencia: -1.4%. Hábitat: Bosque.
+ID 6 - Águila Arpía: Nombre científico Harpia harpyja. Ubicación (top 60, left 28). Continente: Sudamérica. Riesgo: vulnerable. Población: 50000. Vida: 35 años. Tendencia: -0.8%. Hábitat: Selva.
+ID 7 - Ballena Azul: Nombre científico Balaenoptera musculus. Ubicación (top 65, left 78). Continente: Oceanía. Riesgo: peligro. Población: 10000. Vida: 90 años. Tendencia: +0.5%. Hábitat: Océano.
+ID 8 - Zorro Ártico: Nombre científico Vulpes lagopus. Ubicación (top 18, left 45). Continente: Europa. Riesgo: preocupación menor. Población: 630000. Vida: 6 años. Tendencia: -5.1%. Hábitat: Tundra.
+ID 9 - Caimán del Orinoco: Nombre científico Crocodylus intermedius. Ubicación (top 55, left 26). Continente: Sudamérica. Riesgo: crítico. Población: 1500. Vida: 75 años. Tendencia: +1.0%. Hábitat: Río.
+ID 10 - Puma / León de Montaña: Nombre científico Puma concolor. Ubicación (top 38, left 18). Continente: Norteamérica. Riesgo: preocupación menor. Población: 80000. Vida: 12 años. Tendencia: -2.2%. Hábitat: Montaña.
+ID 11 - Lobo Gris: Nombre científico Canis lupus. Ubicación (top 30, left 44). Continente: Europa. Riesgo: preocupación menor. Población: 300000. Vida: 13 años. Tendencia: +1.1%. Hábitat: Bosque.
+ID 12 - Cebra de Grevy: Nombre científico Equus grevyi. Ubicación (top 48, left 54). Continente: África. Riesgo: peligro. Población: 2250. Vida: 25 años. Tendencia: -4.0%. Hábitat: Sabana.
+ID 13 - Guepardo (Cheetah): Nombre científico Acinonyx jubatus. Ubicación (top 50, left 54). Continente: África. Riesgo: vulnerable. Población: 7000. Vida: 12 años. Tendencia: -3.0%. Hábitat: Sabana.
+ID 14 - Tiburón Blanco: Nombre científico Carcharodon carcharias. Ubicación (top 68, left 74). Continente: Oceanía. Riesgo: vulnerable. Población: 3500. Vida: 70 años. Tendencia: -2.5%. Hábitat: Océano.
+ID 15 - Guacamayo Jacinto: Nombre científico Anodorhynchus hyacinthinus. Ubicación (top 62, left 30). Continente: Sudamérica. Riesgo: vulnerable. Población: 6500. Vida: 50 años. Tendencia: +0.3%. Hábitat: Pantanal.
+ID 16 - Leopardo de Amur: Nombre científico Panthera pardus orientalis. Ubicación (top 28, left 78). Continente: Asia. Riesgo: crítico. Población: 100. Vida: 15 años. Tendencia: +5.0%. Hábitat: Bosque.
+
+=== MANUAL DE INTENCIONES COMUNES ===
+Aquí se listan las respuestas recomendadas para consultas muy breves:
+- Consultar mapa: Puedes ver el mapa en la sección central; tiene 16 marcadores interactivos.
+- Misiones: Hay 5 misiones activas que otorgan entre 15 y 25 XP cada una.
+- Estadísticas: Tenemos datos de 1100000 individuos monitoreados globalmente.
+- Contacto / Reportes: WildTrack es un proyecto educativo de conservación comunitaria.
+- ¿Me saludas?: ¡Hola de nuevo! Es un gusto saludarte.
+- ¿Cómo te llamas?: Mi nombre es WildBot, y opero el sistema RAG de WildTrack.
+- ¿Estás vivo?: Soy un programa de inteligencia artificial dedicado a la protección de la fauna silvestre.
