@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Generator: Groq llama-3.3-70b-versatile via /api/chat
 // ============================================================
 
-const CHAT_API_URL = 'http://localhost:3000/api/chat';
+const CHAT_API_URL = '/api/chat';
 
 let chatOpen = false;
 let chatBotTyping = false;
@@ -478,8 +478,8 @@ function renderMarkdown(text) {
 // ============================================================
 
 function initChatbot() {
-  // Verificar que el servidor RAG esté activo
-  fetch('http://localhost:3000/api/status')
+  // Verificar que el backend en Vercel esté activo
+  fetch('/api/chat')
     .then(r => r.json())
     .then(status => {
       console.log('[WildBot] ✅ Servidor RAG conectado:', status);
@@ -489,10 +489,7 @@ function initChatbot() {
       }, 1200);
     })
     .catch(() => {
-      console.warn('[WildBot] ⚠️ Servidor RAG no disponible en localhost:3000');
-      setTimeout(() => {
-        appendChatMsg('bot', '⚠️ <strong>Servidor RAG no encontrado.</strong><br>Ejecuta <code>start.bat</code> para iniciar el servidor con Groq.', true);
-      }, 1200);
+      console.warn('[WildBot] ⚠️ Servidor RAG no devolvió éxito inicial. Puede que falte GROQ_API_KEY o el archivo.');
     });
 }
 
@@ -582,8 +579,8 @@ window.sendChatMessage = async function () {
   } catch (err) {
     $('chatTyping').style.display = 'none';
     chatBotTyping = false;
-    console.error('[WildBot] Error al contactar el servidor RAG:', err);
-    appendChatMsg('bot', '⚠️ No pude conectar con el servidor RAG.<br>Verifica que <code>start.bat</code> esté ejecutándose.', true);
+    console.error('[WildBot] Error al contactar Vercel RAG API:', err);
+    appendChatMsg('bot', '⚠️ No pude conectar con el servidor en la nube. Verifica tu conexión a internet o que el despliegue esté funcionando.', true);
   }
 
   msgs.scrollTop = msgs.scrollHeight;
