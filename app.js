@@ -454,126 +454,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ============================================================
-// WILDBOT — CHATBOT RAG (conocimiento.txt)
-// Motor: TF-IDF + Similaridad Coseno
-// Fuente única: conocimiento.txt — sin respuestas hardcodeadas
+// WILDBOT — CHATBOT RAG con GROQ (VERDADERO RAG)
+// Retriever: TF-IDF en el servidor (conocimiento.txt)
+// Generator: Groq llama-3.3-70b-versatile via /api/chat
 // ============================================================
 
-let ragDocs = [];
-let ragIdf = {};
-let ragReady = false;
+const CHAT_API_URL = 'http://localhost:3000/api/chat';
+
 let chatOpen = false;
 let chatBotTyping = false;
-
-function ragTokenize(text) {
-  return text
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s]/g, ' ') 
-    .split(/\s+/)
-    .filter(t => t.length >= 2 && !STOPWORDS_ES.has(t));
-}
-
-function ragBuildTF(tokens) {
-  const tf = {};
-  tokens.forEach(t => { tf[t] = (tf[t] || 0) + 1; });
-  const total = tokens.length || 1;
-  Object.keys(tf).forEach(k => tf[k] /= total);
-  return tf;
-}
-
-function ragBuildIDF(docs) {
-  const idf = {};
-  const N = docs.length;
-  docs.forEach(doc => {
-    new Set(doc.tokens).forEach(t => { idf[t] = (idf[t] || 0) + 1; });
-  });
-  Object.keys(idf).forEach(k => { idf[k] = Math.log((N + 1) / (idf[k] + 1)) + 1; });
-  return idf;
-}
-
-function ragTFIDF(tf, idf) {
-  const vec = {};
-  Object.keys(tf).forEach(t => { vec[t] = tf[t] * (idf[t] || 1); });
-  return vec;
-}
-
-function ragCosineSim(a, b) {
-  let dot = 0, na = 0, nb = 0;
-  new Set([...Object.keys(a), ...Object.keys(b)]).forEach(k => {
-    const av = a[k] || 0, bv = b[k] || 0;
-    dot += av * bv; na += av * av; nb += bv * bv;
-  });
-  return na && nb ? dot / Math.sqrt(na * nb) : 0;
-}
-
-// --- Parsear conocimiento.txt en fragmentos ---
-function parseTxtToFragments(text) {
-  const fragments = [];
-  const blocks = text.split(/(?:\r?\n){2,}/); // Separa por bloques (uno o más saltos de línea vacíos)
-  for (let b of blocks) {
-    if (b.includes('|||')) {
-      // Formato Q&A: "Keywords ||| Respuesta"
-      const parts = b.split('|||');
-      fragments.push({ text: parts[0].trim(), response: parts[1].trim(), source: 'txt' });
-    } else if (b.trim().length > 5) {
-      // Fallback para párrafos normales
-      fragments.push({ text: b.trim(), response: b.trim(), source: 'txt' });
-    }
-  }
-  return fragments;
-}
-
-// --- Enriquecer fragmentos con datos vivos de ANIMALS ---
-
-
-// --- Inicializar RAG ---
-async function initRAG() {
-  let docs = [];
-
-  try {
-    const res = await fetch('conocimiento.txt?v=' + Date.now());
-    if (res.ok) {
-      const txt = await res.text();
-      docs = parseTxtToFragments(txt);
-      console.log(`[WildBot] ✅ conocimiento.txt cargado — ${docs.length} fragmentos`);
-    } else {
-      console.error('[WildBot] ❌ No se encontró conocimiento.txt');
-    }
-  } catch (err) {
-    console.error('[WildBot] ❌ Error cargando conocimiento.txt:', err);
-  }
-
-  if (docs.length === 0) {
-    ragReady = false;
-    const dict = $('ui-dictionary');
-    appendChatMsg('bot', dict ? dict.dataset.botLoadErr : 'ERROR', true);
-    return;
-  }
-
-  const rawDocs = docs.map(d => ({ ...d, tokens: ragTokenize(d.text) }));
-  ragIdf = ragBuildIDF(rawDocs);
-  ragDocs = rawDocs.map(d => ({ ...d, tfIdf: ragTFIDF(ragBuildTF(d.tokens), ragIdf) }));
-  ragReady = true;
-  console.log(`[WildBot] ✅ RAG puro inicializado con éxito. (${ragDocs.length} vectores indexados).`);
-}
-
-function ragQuery(query, threshold = 0.02) {
-  if (!ragReady) return null;
-  const tokens = ragTokenize(query);
-  if (tokens.length === 0) return null;
-
-  const qVec = ragTFIDF(ragBuildTF(tokens), ragIdf);
-  
-  const bestMatches = ragDocs
-    .map((d, i) => ({ score: ragCosineSim(qVec, d.tfIdf), text: d.response, source: d.source }))
-    .filter(m => m.score >= threshold)
-    .sort((a, b) => b.score - a.score);
-
-  if (bestMatches.length === 0) return null;
-
-  return bestMatches[0].text;
-}
 
 // --- Renderizar markdown básico a HTML ---
 function renderMarkdown(text) {
@@ -589,11 +478,22 @@ function renderMarkdown(text) {
 // ============================================================
 
 function initChatbot() {
-  initRAG();
-  setTimeout(() => {
-    const dict = $('ui-dictionary');
-    appendChatMsg('bot', dict ? dict.dataset.botGreeting : 'Conectado');
-  }, 1200);
+  // Verificar que el servidor RAG esté activo
+  fetch('http://localhost:3000/api/status')
+    .then(r => r.json())
+    .then(status => {
+      console.log('[WildBot] ✅ Servidor RAG conectado:', status);
+      setTimeout(() => {
+        const dict = $('ui-dictionary');
+        appendChatMsg('bot', dict ? dict.dataset.botGreeting : '🌿 Conectado al motor RAG con Groq.');
+      }, 1200);
+    })
+    .catch(() => {
+      console.warn('[WildBot] ⚠️ Servidor RAG no disponible en localhost:3000');
+      setTimeout(() => {
+        appendChatMsg('bot', '⚠️ <strong>Servidor RAG no encontrado.</strong><br>Ejecuta <code>start.bat</code> para iniciar el servidor con Groq.', true);
+      }, 1200);
+    });
 }
 
 window.toggleChat = function () {
@@ -617,28 +517,32 @@ function appendChatMsg(role, text, raw = false) {
   const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
   const isUser = role === 'user';
   const html = raw ? text : renderMarkdown(text);
-  
+
   const tmpl = $('tmpl-chat-msg');
   const clone = tmpl.content.cloneNode(true);
   const cmsg = clone.querySelector('.cmsg');
   cmsg.classList.add(isUser ? 'user' : 'bot');
-  
+
   const avatar = clone.querySelector('.cmsg-avatar');
   avatar.classList.add(isUser ? 'user-av' : 'bot-av');
   const dict = $('ui-dictionary');
   avatar.textContent = isUser ? (dict ? dict.dataset.chatYou : 'Tú') : (dict ? dict.dataset.chatBot : '🌿');
-  
+
   clone.querySelector('.cmsg-bubble').innerHTML = html;
-  
+
   const timeEl = clone.querySelector('.cmsg-time');
   if (isUser) timeEl.classList.add('user-t');
   timeEl.textContent = time;
-  
+
   container.appendChild(clone.firstElementChild);
   container.scrollTop = container.scrollHeight;
 }
 
-window.sendChatMessage = function () {
+// ============================================================
+// ENVÍO DE MENSAJE — llama al backend RAG con Groq
+// ============================================================
+
+window.sendChatMessage = async function () {
   if (chatBotTyping) return;
   const input = $('chatInput');
   const text = input.value.trim();
@@ -653,19 +557,36 @@ window.sendChatMessage = function () {
   const msgs = $('chatMessages');
   msgs.scrollTop = msgs.scrollHeight;
 
-  setTimeout(() => {
+  try {
+    // PASO 1 + 2: Servidor hace Retrieve → Generate con Groq
+    const response = await fetch(CHAT_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
     $('chatTyping').style.display = 'none';
     chatBotTyping = false;
 
-    const response = ragQuery(text);
-    if (response) {
-      appendChatMsg('bot', response);
+    if (data.answer) {
+      appendChatMsg('bot', data.answer);
     } else {
       const dict = $('ui-dictionary');
-      appendChatMsg('bot', dict ? dict.dataset.botErr : 'No entiendo');
+      appendChatMsg('bot', dict ? dict.dataset.botErr : '🌿 No encontré información sobre eso.');
     }
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 600 + Math.random() * 400);
+  } catch (err) {
+    $('chatTyping').style.display = 'none';
+    chatBotTyping = false;
+    console.error('[WildBot] Error al contactar el servidor RAG:', err);
+    appendChatMsg('bot', '⚠️ No pude conectar con el servidor RAG.<br>Verifica que <code>start.bat</code> esté ejecutándose.', true);
+  }
+
+  msgs.scrollTop = msgs.scrollHeight;
 };
 
 window.chatKeyDown = function (e) {
@@ -682,6 +603,6 @@ window.clearChat = function () {
   if (msgs) {
     msgs.innerHTML = '';
     const dict = $('ui-dictionary');
-    setTimeout(() => appendChatMsg('bot', dict ? dict.dataset.botReset : 'Limpio'), 150);
+    setTimeout(() => appendChatMsg('bot', dict ? dict.dataset.botReset : '🌿 Limpio'), 150);
   }
 };
